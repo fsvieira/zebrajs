@@ -47,11 +47,26 @@ describe("Types Tests.", () => {
                         ))
                     `,
                     results: [
+                        /*
                         "@(x : int @(y : int @(* : int -> int -> int ')))",
                         "@(x : int @(y : real @(* : int -> real -> real ')))",
-                        "@(x : real @(y : {{v$144 : int real}} @(* : real -> {{v$144 : int real}} -> real ')))"
+                        "@(x : real @(y : {{v$144 : int real}} @(* : real -> {{v$144 : int real}} -> real ')))"*/
+                        
+                        `@(x : ..tx @(y : ..ty @(* : ..tx -> ..ty -> .._ '$1)))
+                        --> digraph G {
+                            rankdir=LR; size="8,5" node [shape = doublecircle]; __5; node [shape = circle];
+                            START -> tx_2 [label = "tx=int"]
+                            START -> tx_3 [label = "tx=real"]
+                            tx_2 -> ty_6 [label = "ty=int"]
+                            tx_2 -> ty_4 [label = "ty=real"]
+                            tx_3 -> ty_4 [label = "ty=real"]
+                            tx_3 -> ty_4 [label = "ty=int"]
+                            ty_4 -> __5 [label = "_=real"]
+                            ty_6 -> __5 [label = "_=int"] 
+                        }`
                     ]
                 },
+                /*
                 {
                     // x * y / int
                     query: `
@@ -80,7 +95,7 @@ describe("Types Tests.", () => {
                         "fn: int ->  real -> real",
                         "fn: real -> [v$165: int real] -> real"
                     ]
-                }
+                }*/
             ]
         )
     )

@@ -13,7 +13,14 @@ describe("Test domain extraction.", () => {
             `, [{
 				query: `?(number 'a)`,
 				results: [
-					"@(number {{v$37 : 0 1 2 3}})"
+					`@(number ..a) 
+					--> digraph G { 
+						rankdir=LR; size="8,5" node [shape = doublecircle]; a_4; node [shape = circle]; 
+						START -> a_4 [label = "a=0"] 
+						START -> a_4 [label = "a=1"] 
+						START -> a_4 [label = "a=2"] 
+						START -> a_4 [label = "a=3"] 
+					}`
 				]
 			}]
 		)
@@ -30,11 +37,21 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: `?((number 'x) (number 'y))`,
 				results: [
-					"@(@(number {{v$48 : 0 1 2 3}}) @(number {{v$52 : 0 1 2 3}}))"
+					`@(@(number ..x) @(number ..y))
+					--> digraph G {
+						rankdir=LR; size="8,5" node [shape = doublecircle]; y_3; node [shape = circle]; 
+						START -> x_2 [label = "x=0"]
+						START -> x_2 [label = "x=1"]
+						START -> x_2 [label = "x=2"]
+						START -> x_2 [label = "x=3"]
+						x_2 -> y_3 [label = "y=0"] 
+						x_2 -> y_3 [label = "y=1"] 
+						x_2 -> y_3 [label = "y=2"] 
+						x_2 -> y_3 [label = "y=3"] 
+					}`
 				]
 			}]
 		)
 	);
-
 });
 

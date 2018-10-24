@@ -1,7 +1,9 @@
 "use strict";
 
 const should = require("should");
-const {Z, toString} = require("../");
+const {Z} = require("../");
+const {toStringDomain} = require("../lib/utils");
+
 const ZTL = require("ztl");
 
 function normalize (s) {
@@ -15,49 +17,6 @@ function normalize (s) {
 	return s;
 }
 
-/*
-function queryCallback (db, q, results) {
-	return (r, f) => {
-		const qresults = results[q] = results[q] || [];
-
-		const rs = f ? db.execute(f, r) : toString(r, true);
-
-		if (qresults.indexOf(rs) === -1) {
-			qresults.push(rs);
-		}
-	};
-}*/
-
-function queryCallback (db, q, results, f, ztlDesc) {
-	if (!f && ztlDesc) {
-		const ztl = new ZTL();
-		ztl.compile(ztlDesc.code);
-		f = (r) => ztl.fn[ztlDesc.main](r);
-	} 
-
-	return r => {
-		const qresults = results[q] = results[q] || [];
-
-		const rs = f ? f(r) : toString(r, true);
-
-		if (qresults.indexOf(rs) === -1) {
-			qresults.push(rs);
-		}
-	};
-}
-
-function queryErrorHandler (q, results) {
-	return error => {
-		// it should always contain one error,
-		// but if it gets more, we will detect it.
-		const qresults = results[q] = results[q] || [];
-
-		qresults.push(error);
-
-		return Promise.resolve(error);
-	};
-}
-
 function getPostProcessingFunction (query) {
 
 	let f = query.postProcessing;
@@ -68,7 +27,7 @@ function getPostProcessingFunction (query) {
 		return r => ztl.fn[query.ztl.main](r);
 	}
 
-	return f || (r => toString(r, true));
+	return f || ((r, domains) => toStringDomain(domains, r, true));
 }
 
 function test (definitions, queries, options) {
@@ -95,6 +54,8 @@ function test (definitions, queries, options) {
 
 			const db = await Z.connect(dbname);
 			await db.execute(definitions);
+			const DOMAINS = db.zvs.data.global("domains");
+			const QUERY = db.zvs.data.global("query");
 
 			for (let q in queries) {
 				if (queries.hasOwnProperty(q)) {
@@ -136,9 +97,10 @@ function test (definitions, queries, options) {
 						const r = results.map(b => normalize(
 								f(
 									db.zvs.getObject(
-										b, 
-										db.zvs.data.global("query")
-									)
+										b,
+										QUERY
+									),
+									db.zvs.getObject(b, DOMAINS)
 								)
 							)
 						)
