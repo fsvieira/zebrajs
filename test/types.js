@@ -47,11 +47,6 @@ describe("Types Tests.", () => {
                         ))
                     `,
                     results: [
-                        /*
-                        "@(x : int @(y : int @(* : int -> int -> int ')))",
-                        "@(x : int @(y : real @(* : int -> real -> real ')))",
-                        "@(x : real @(y : {{v$144 : int real}} @(* : real -> {{v$144 : int real}} -> real ')))"*/
-                        
                         `@(x : ..tx @(y : ..ty @(* : ..tx -> ..ty -> .._ '$1)))
                         --> digraph G {
                             rankdir=LR; size="8,5" node [shape = doublecircle]; __5; node [shape = circle];
@@ -66,7 +61,6 @@ describe("Types Tests.", () => {
                         }`
                     ]
                 },
-                /*
                 {
                     // x * y / int
                     query: `
@@ -91,11 +85,12 @@ describe("Types Tests.", () => {
                         main: "fn"
                     },
                     results: [
-                        "fn: int ->  int -> real",
-                        "fn: int ->  real -> real",
-                        "fn: real -> [v$165: int real] -> real"
+                        "fn: int -> int -> real",
+                        "fn: int -> real -> real",
+                        "fn: real -> int -> real",
+                        "fn: real -> real -> real"
                     ]
-                }*/
+                }
             ]
         )
     )

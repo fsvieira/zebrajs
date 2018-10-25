@@ -3,6 +3,7 @@
 const should = require("should");
 const {Z} = require("../");
 const {toStringDomain} = require("../lib/utils");
+const FSA = require("fsalib");
 
 const ZTL = require("ztl");
 
@@ -17,6 +18,51 @@ function normalize (s) {
 	return s;
 }
 
+function words (fsa, variables, state, prefix) {
+	prefix = prefix || [];
+
+	if (variables.length) {
+		state = state || fsa.start;
+		
+		const variable = variables.shift();
+		const symbolTos = fsa.transitions.get(state);
+
+		let results = [];
+		for (let [symbol, to] of symbolTos) {
+			results = results.concat(
+				words(
+					fsa,
+					variables.slice(), 
+					to.values().next().value, 
+					prefix.concat({
+						variable,
+						symbol
+					})
+				)
+			);
+		}
+		
+		return results;
+	}
+	else {
+		return [prefix];
+	}
+}
+
+function replaceVariables (r, vs) {
+	if (r.type === 'tuple') {
+		return {
+			...r,
+			data: r.data.map(r => replaceVariables(r, vs))
+		}
+	}
+	else if (r.type === 'domain') {
+		return vs[r.id];
+	}
+
+	return r;
+}
+
 function getPostProcessingFunction (query) {
 
 	let f = query.postProcessing;
@@ -24,7 +70,27 @@ function getPostProcessingFunction (query) {
 	if (!f && query.ztl) {
 		const ztl = new ZTL();
 		ztl.compile(query.ztl.code);
-		return r => ztl.fn[query.ztl.main](r);
+
+		return (r, domains) => {
+			if (domains.type === 'domains') {
+				const fsa = FSA.fromJSON(domains.data);
+				const rs = words(fsa, domains.data.variables).map(w => {
+					const vs = {};
+
+					for (let i=0; i<w.length; i++) {
+						const o = w[i];
+						vs[o.variable.id] = o.symbol;
+					}
+
+					return replaceVariables(r, vs);
+				});
+
+				return rs.map(r => ztl.fn[query.ztl.main](r));
+			}
+			else {
+				return ztl.fn[query.ztl.main](r);
+			}
+		}
 	}
 
 	return f || ((r, domains) => toStringDomain(domains, r, true));
@@ -94,17 +160,26 @@ function test (definitions, queries, options) {
 						rs = results.map(r => r.data.message);
 					}
 					else {
-						const r = results.map(b => normalize(
-								f(
-									db.zvs.getObject(
-										b,
-										QUERY
-									),
-									db.zvs.getObject(b, DOMAINS)
-								)
-							)
-						)
-						.sort();
+						let r = [];
+						for (let i=0; i<results.length; i++) {
+							const b = results[i];
+							const rs = f(
+								db.zvs.getObject(
+									b,
+									QUERY
+								),
+								db.zvs.getObject(b, DOMAINS)
+							);
+
+							if (rs instanceof Array) {
+								r = r.concat(rs.map(normalize));
+							}
+							else {
+								r.push(normalize(rs));
+							}
+						}
+
+						r.sort();
 					
 						// remove duplicates,
 						rs = [];
