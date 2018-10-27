@@ -27,7 +27,11 @@ describe("Prolog examples port Tests.", () => {
 				{
 					query: "?(mary likes 'stuff)",
 					results: [
-						"@(mary likes {{v$51 : food wine}})"
+						`@(mary likes ..stuff) 
+						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_4; node [shape = circle];
+							START -> stuff_4 [label = "stuff=food"]
+							START -> stuff_4 [label = "stuff=wine"] 
+						}`
 					]
 				}
 			]
@@ -44,7 +48,11 @@ describe("Prolog examples port Tests.", () => {
             `, [{
 				query: "?(john likes 'stuff 'p)",
 				results: [
-					"@(john likes {{v$58 : food wine}} @(mary likes {{v$58 : food wine}} '))"
+					`@(john likes ..stuff @(mary likes ..stuff '))
+					--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
+						START -> stuff_2 [label = "stuff=food"]
+						START -> stuff_2 [label = "stuff=wine"] 
+					}`
 				]
 			}]
 		)
@@ -70,7 +78,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	it("Should query what john likes, he likes anyone who likes wine.",
+	xit("Should query what john likes, he likes anyone who likes wine.",
 		test(
 			`(mary likes wine ') # likes(mary,wine).
 			(john likes wine ') # likes(john,wine).
@@ -109,7 +117,7 @@ describe("Prolog examples port Tests.", () => {
 	// - ('person likes wine ') -> (john likes wine (wine likes wine ')) !fail,
 	// TODO: unification is failing ??
 	// @(john likes wine ('person likes wine ')) => should be @(john likes wine ('person likes wine '))
-	it("Should query what john likes," +
+	xit("Should query what john likes," +
 		"he likes what mary likes and people that like wine.",
 		test(
 			`(mary likes food ') # likes(mary,food).
@@ -144,7 +152,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	it("Should query john likes people that like themselves.",
+	xit("Should query john likes people that like themselves.",
 		test(
 			`(john likes wine ') # likes(john,wine).
 
@@ -172,7 +180,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	it("Should query people about what they like (Extended).",
+	xit("Should query people about what they like (Extended).",
 		test(
 			`(mary likes food ')  # likes(mary,food).
 			(mary likes wine ')   # likes(mary,wine).

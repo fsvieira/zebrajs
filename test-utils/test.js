@@ -8,14 +8,14 @@ const FSA = require("fsalib");
 const ZTL = require("ztl");
 
 function normalize (s) {
-	if (typeof s === "string") {
-		return s
-			.replace(/[\n\t ]+/g, " ")
-			.trim()
-		;
+	if (typeof s !== "string") {
+		s = JSON.stringify(s, null, '  ');
 	}
 
-	return s;
+	return s
+		.replace(/[\n\t ]+/g, " ")
+		.trim()
+	;
 }
 
 function words (fsa, variables, state, prefix) {
@@ -70,7 +70,10 @@ function getPostProcessingFunction (query) {
 	if (!f && query.ztl) {
 		const ztl = new ZTL();
 		ztl.compile(query.ztl.code);
+		f = r => ztl.fn[query.ztl.main](r);
+	}
 
+	if (f) {
 		return (r, domains) => {
 			if (domains.type === 'domains') {
 				const fsa = FSA.fromJSON(domains.data);
@@ -85,15 +88,15 @@ function getPostProcessingFunction (query) {
 					return replaceVariables(r, vs);
 				});
 
-				return rs.map(r => ztl.fn[query.ztl.main](r));
+				return rs.map(f);
 			}
 			else {
-				return ztl.fn[query.ztl.main](r);
+				return f(r);
 			}
 		}
 	}
 
-	return f || ((r, domains) => toStringDomain(domains, r, true));
+	return ((r, domains) => toStringDomain(domains, r, true));
 }
 
 function test (definitions, queries, options) {

@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Multiply Tests", () => {
-	it("should multiply results.",
+	xit("should multiply results.",
 		test(
 			`(yellow 'a)
             ('b blue)
@@ -18,7 +18,7 @@ describe("Multiply Tests", () => {
 		)
 	);
 
-	it("should multiply results (with variables with same name).",
+	xit("should multiply results (with variables with same name).",
 		test(
 			`(yellow 'a)
             ('a blue)

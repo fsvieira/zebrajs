@@ -65,8 +65,9 @@ describe("Func tests.", () => {
 				query: "?(mother ' ' ')",
 				postProcessing: r => ztl.fn.mother(r),
 				results: [
-					"[v$116: joana isabel] is noémia daughter.",
-					"filipe is noémia son."
+					"filipe is noémia son.",
+					"isabel is noémia daughter.",
+					"joana is noémia daughter."
 				]
 			}]
 		)

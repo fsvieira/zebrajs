@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Inifinity tests.", () => {
-	it("Should declare natural numbers and query all natural numbers",
+	xit("Should declare natural numbers and query all natural numbers",
 		test(
 			"(nat 0) (nat (nat 'x))", [{
 				query: "?(nat 'x)",
@@ -16,7 +16,7 @@ describe("Inifinity tests.", () => {
 		)
 	);
 
-	it("Should declare recursive tuples",
+	xit("Should declare recursive tuples",
 		/*
 		    A = B
 		    B = A

@@ -52,7 +52,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	it("Should declare a add func",
+	xit("Should declare a add func",
 		test(
 			`
             (nat 0)
@@ -116,7 +116,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	it("Should declare a mul func",
+	xit("Should declare a mul func",
 		test(
 			`
             # Nat
@@ -221,7 +221,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	it("Should declare a factorial func",
+	xit("Should declare a factorial func",
 		test(
 			`
             # Nat
