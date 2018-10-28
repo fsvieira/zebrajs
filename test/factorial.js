@@ -52,7 +52,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	xit("Should declare a add func",
+	it("Should declare a add func",
 		test(
 			`
             (nat 0)
