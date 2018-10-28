@@ -78,13 +78,14 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	xit("Should query what john likes, he likes anyone who likes wine.",
+	it("Should query what john likes, he likes anyone who likes wine.",
 		test(
 			`(mary likes wine ') # likes(mary,wine).
 			(john likes wine ') # likes(john,wine).
 
 			# 2. John likes anyone who likes wine
-			(john likes 'person ('person likes wine '))`, [{
+			(john likes 'person ('person likes wine '))`, 
+			[{
 				// (john likes 'stuff 'p) . (john likes 'person
 				//        ('person likes wine '))
 				// =>   stuff = person
@@ -100,13 +101,13 @@ describe("Prolog examples port Tests.", () => {
 
 				query: "?(john likes 'stuff 'p)",
 				results: [
-					/* TODO: 
-					"@(john likes wine ')",
-					"@(john likes {{v$61 : john mary}} @({{v$61 : john mary}} likes wine '))"
-					*/
-					"@(john likes john @(john likes wine '))",
-					"@(john likes mary @(mary likes wine '))",
-					"@(john likes wine ')"
+					`@(john likes ..stuff @(..stuff likes wine '))
+						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
+							START -> stuff_2 [label = "stuff=mary"] 
+							START -> stuff_2 [label = "stuff=john"] 
+						}
+					`,
+					`@(john likes wine 'p)`
 				]
 			}]
 		)
@@ -117,7 +118,7 @@ describe("Prolog examples port Tests.", () => {
 	// - ('person likes wine ') -> (john likes wine (wine likes wine ')) !fail,
 	// TODO: unification is failing ??
 	// @(john likes wine ('person likes wine ')) => should be @(john likes wine ('person likes wine '))
-	xit("Should query what john likes," +
+	it("Should query what john likes," +
 		"he likes what mary likes and people that like wine.",
 		test(
 			`(mary likes food ') # likes(mary,food).
@@ -132,21 +133,28 @@ describe("Prolog examples port Tests.", () => {
 			(john likes 'person ('person likes wine '))`, [{
 				query: "?(john likes 'stuff 'p)",
 				results: [
-					"@(john likes mary ')",
-
-					// TODO: the next one is repeated on this: "@(john likes {{v$115 : john mary}} @({{v$115 : john mary}} likes wine '))",
+					`@(john likes ..stuff 'p) 
+						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
+							START -> stuff_2 [label = "stuff=wine"]
+							START -> stuff_2 [label = "stuff=mary"] 
+						}
+					`, 
+					`@(john likes ..stuff @(..stuff likes wine ')) 
+						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
+							START -> stuff_2 [label = "stuff=mary"]
+							START -> stuff_2 [label = "stuff=john"]
+						}
+					`,
+					`@(john likes ..stuff @(mary likes ..stuff '))
+						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
+							START -> stuff_2 [label = "stuff=food"]
+							START -> stuff_2 [label = "stuff=wine"]
+						}
+					`, 
+					"@(john likes john @(john likes wine @(mary likes wine ')))",
+					// TODO: REMOVE REPEATED RESULTS LIKE THIS: 
 					"@(john likes mary @(mary likes wine '))", 
-					"@(john likes wine ')",
-					
-					// TODO: the next one is repeated on this: "@(john likes {{v$115 : john mary}} @({{v$115 : john mary}} likes wine '))",
-					"@(john likes wine @(mary likes wine '))", 
-					"@(john likes {{v$107 : food wine}} @(mary likes {{v$107 : food wine}} '))",
-					"@(john likes {{v$115 : john mary}} @({{v$115 : john mary}} likes wine '))",
-
-					// TODO: this is strange, probably a bug, when replacing domain with mary -> (mary likes wine (mary likes wine)) 
-					"@(john likes {{v$115 : john mary}} @({{v$115 : john mary}} likes wine @(mary likes wine ')))"
-
-					// DUPLICATE HAPPENING
+					"@(john likes wine @(mary likes wine '))"
 				]
 			}]
 		)
