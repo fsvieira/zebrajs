@@ -299,7 +299,7 @@ describe("Factorial Parser Tests.", () => {
 						"| facResult",
 					results: [24]
 				}*/
-			], { timeout: 60000 * 5 , depth: 115}
+			], { timeout: 60000 * 5 }
 		)
 	);
 });
