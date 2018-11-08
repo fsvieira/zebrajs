@@ -28,10 +28,11 @@ describe("Prolog examples port Tests.", () => {
 					query: "?(mary likes 'stuff)",
 					results: [
 						`@(mary likes ..stuff) 
-						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_4; node [shape = circle];
-							START -> stuff_4 [label = "stuff=food"]
-							START -> stuff_4 [label = "stuff=wine"] 
-						}`
+							--> digraph G { 
+								rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
+								START -> stuff_2 [label = "stuff=food"] 
+								START -> stuff_2 [label = "stuff=wine"] 
+							}`
 					]
 				}
 			]

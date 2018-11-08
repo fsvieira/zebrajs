@@ -15,11 +15,11 @@ describe("Test domain extraction.", () => {
 				results: [
 					`@(number ..a) 
 					--> digraph G { 
-						rankdir=LR; size="8,5" node [shape = doublecircle]; a_4; node [shape = circle]; 
-						START -> a_4 [label = "a=0"] 
-						START -> a_4 [label = "a=1"] 
-						START -> a_4 [label = "a=2"] 
-						START -> a_4 [label = "a=3"] 
+						rankdir=LR; size="8,5" node [shape = doublecircle]; a_2; node [shape = circle]; 
+						START -> a_2 [label = "a=0"] 
+						START -> a_2 [label = "a=1"] 
+						START -> a_2 [label = "a=2"] 
+						START -> a_2 [label = "a=3"] 
 					}`
 				]
 			}]

@@ -94,7 +94,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should make distinct tuples",
+	xit("Should make distinct tuples",
 		test(
 			`(color yellow)
             (color blue)
