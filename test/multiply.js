@@ -10,8 +10,8 @@ describe("Multiply Tests", () => {
             `, [{
 				query: "?('c 'd)",
 				results: [
-					"@('c blue)",
-					"@(yellow 'd)",
+					"@('b blue)",
+					"@(yellow 'a)", 
 					"@(yellow blue)"
 				]
 			}]
@@ -26,7 +26,7 @@ describe("Multiply Tests", () => {
 				query: "?('a 'b)",
 				results: [
 					"@('a blue)",
-					"@(yellow 'b)", 
+					"@(yellow 'a)",
 					"@(yellow blue)"
 				]
 			}]
