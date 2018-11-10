@@ -111,7 +111,7 @@
     "validateQuoteMarks": "\""
   },
   "dependencies": {
-    "fsalib": "^2.2.0",
+    "fsalib": "^2.2.1",
     "identicobjects": "^1.0.2",
     "ztl": "^1.0.0"
   }
