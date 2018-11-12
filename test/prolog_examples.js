@@ -161,7 +161,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	xit("Should query john likes people that like themselves.",
+	it("Should query john likes people that like themselves.",
 		test(
 			`(john likes wine ') # likes(john,wine).
 
