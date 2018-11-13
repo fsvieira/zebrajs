@@ -189,7 +189,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	xit("Should query people about what they like (Extended).",
+	it("Should query people about what they like (Extended).",
 		test(
 			`(mary likes food ')  # likes(mary,food).
 			(mary likes wine ')   # likes(mary,wine).
@@ -213,13 +213,29 @@ describe("Prolog examples port Tests.", () => {
             (equal 'x 'x)`, [{
 				query: "?(john likes 'stuff ')",
 				results: [
-					"@(john likes john @(john likes wine '))",
+					// TODO: remove duplicated solutions.
+					`@(john likes ..stuff ') 
+						--> digraph G { 
+							rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
+								START -> stuff_2 [label = "stuff=wine"]
+								START -> stuff_2 [label = "stuff=mary"]
+							}`,
+					`@(john likes ..stuff @(..stuff likes wine ')) 
+						--> digraph G {
+							rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle]; 
+								START -> stuff_2 [label = "stuff=mary"]
+								START -> stuff_2 [label = "stuff=john"]
+							}`,
+					`@(john likes ..stuff @(mary likes ..stuff ')) 
+						--> digraph G {
+							rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
+								START -> stuff_2 [label = "stuff=food"]
+								START -> stuff_2 [label = "stuff=wine"]
+							}`,
 					"@(john likes john @(john likes wine @(mary likes wine ')))", 
 					"@(john likes mary @(mary likes wine '))", 
 					"@(john likes peter @(peter likes peter '))[^!(equal peter john)]",
-					"@(john likes {{v$98 : food wine}} @(mary likes {{v$98 : food wine}} '))",
-					"@(john likes {{v$98 : mary wine}} ')", 
-					"@(john likes {{v$98 : mary wine}} @(mary likes wine '))"
+					"@(john likes wine @(mary likes wine '))"
 				]
 			}]
 		)
