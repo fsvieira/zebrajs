@@ -29,9 +29,9 @@ describe("Prolog examples port Tests.", () => {
 					results: [
 						`@(mary likes ..stuff) 
 							--> digraph G { 
-								rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
-								START -> stuff_2 [label = "stuff=food"] 
-								START -> stuff_2 [label = "stuff=wine"] 
+								rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle];
+								START -> "stuff_2" [label = "stuff=food"] 
+								START -> "stuff_2" [label = "stuff=wine"] 
 							}`
 					]
 				}
@@ -50,9 +50,9 @@ describe("Prolog examples port Tests.", () => {
 				query: "?(john likes 'stuff 'p)",
 				results: [
 					`@(john likes ..stuff @(mary likes ..stuff '))
-					--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
-						START -> stuff_2 [label = "stuff=food"]
-						START -> stuff_2 [label = "stuff=wine"] 
+					--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle];
+						START -> "stuff_2" [label = "stuff=food"]
+						START -> "stuff_2" [label = "stuff=wine"] 
 					}`
 				]
 			}]
@@ -103,9 +103,9 @@ describe("Prolog examples port Tests.", () => {
 				query: "?(john likes 'stuff 'p)",
 				results: [
 					`@(john likes ..person @(..person likes wine \')) 
-						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; person_2; node [shape = circle];
-							START -> person_2 [label = "person=mary"]
-							START -> person_2 [label = "person=john"] 
+						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; "person_2"; node [shape = circle];
+							START -> "person_2" [label = "person=mary"]
+							START -> "person_2" [label = "person=john"] 
 						}
 					`,
 					"@(john likes wine ')"
@@ -135,21 +135,21 @@ describe("Prolog examples port Tests.", () => {
 				query: "?(john likes 'stuff 'p)",
 				results: [
 					`@(john likes ..stuff 'p) 
-						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
-							START -> stuff_2 [label = "stuff=wine"]
-							START -> stuff_2 [label = "stuff=mary"] 
+						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle];
+							START -> "stuff_2" [label = "stuff=wine"]
+							START -> "stuff_2" [label = "stuff=mary"] 
 						}
 					`, 
 					`@(john likes ..stuff @(..stuff likes wine ')) 
-						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
-							START -> stuff_2 [label = "stuff=mary"]
-							START -> stuff_2 [label = "stuff=john"]
+						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle];
+							START -> "stuff_2" [label = "stuff=mary"]
+							START -> "stuff_2" [label = "stuff=john"]
 						}
 					`,
 					`@(john likes ..stuff @(mary likes ..stuff '))
-						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
-							START -> stuff_2 [label = "stuff=food"]
-							START -> stuff_2 [label = "stuff=wine"]
+						--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle];
+							START -> "stuff_2" [label = "stuff=food"]
+							START -> "stuff_2" [label = "stuff=wine"]
 						}
 					`, 
 					"@(john likes john @(john likes wine @(mary likes wine ')))",
@@ -216,21 +216,21 @@ describe("Prolog examples port Tests.", () => {
 					// TODO: remove duplicated solutions.
 					`@(john likes ..stuff ') 
 						--> digraph G { 
-							rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
-								START -> stuff_2 [label = "stuff=wine"]
-								START -> stuff_2 [label = "stuff=mary"]
+							rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle];
+								START -> "stuff_2" [label = "stuff=wine"]
+								START -> "stuff_2" [label = "stuff=mary"]
 							}`,
 					`@(john likes ..stuff @(..stuff likes wine ')) 
 						--> digraph G {
-							rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle]; 
-								START -> stuff_2 [label = "stuff=mary"]
-								START -> stuff_2 [label = "stuff=john"]
+							rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle]; 
+								START -> "stuff_2" [label = "stuff=mary"]
+								START -> "stuff_2" [label = "stuff=john"]
 							}`,
 					`@(john likes ..stuff @(mary likes ..stuff ')) 
 						--> digraph G {
-							rankdir=LR; size="8,5" node [shape = doublecircle]; stuff_2; node [shape = circle];
-								START -> stuff_2 [label = "stuff=food"]
-								START -> stuff_2 [label = "stuff=wine"]
+							rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle];
+								START -> "stuff_2" [label = "stuff=food"]
+								START -> "stuff_2" [label = "stuff=wine"]
 							}`,
 					"@(john likes john @(john likes wine @(mary likes wine ')))", 
 					"@(john likes mary @(mary likes wine '))", 

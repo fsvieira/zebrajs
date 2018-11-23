@@ -4,7 +4,7 @@ const test = require("../test-utils/test");
 
 describe("Send more money puzzle test.", function () {
 
-	xit("should solve send more money",
+	it("should solve send more money",
 		test(
 			`
             # declare list,
@@ -315,7 +315,8 @@ describe("Send more money puzzle test.", function () {
 				results: [
 					"TODO"
 				]
-			}]
+            }],
+            { timeout: 24 * 60 * 60 * 1000 }
 		)
 	);
 });

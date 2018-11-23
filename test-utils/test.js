@@ -28,20 +28,23 @@ function words (fsa, variables, state, prefix) {
 		const symbolTos = fsa.transitions.get(state);
 
 		let results = [];
-		for (let [symbol, to] of symbolTos) {
-			results = results.concat(
-				words(
-					fsa,
-					variables.slice(), 
-					to.values().next().value, 
-					prefix.concat({
-						variable,
-						symbol
-					})
-				)
-			);
+
+		if (symbolTos) {
+			for (let [symbol, to] of symbolTos) {
+				results = results.concat(
+					words(
+						fsa,
+						variables.slice(), 
+						to.values().next().value, 
+						prefix.concat({
+							variable,
+							symbol
+						})
+					)
+				);
+			}
 		}
-		
+
 		return results;
 	}
 	else {

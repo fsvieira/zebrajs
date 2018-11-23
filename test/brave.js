@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Brave puzzle Tests.", () => {
-	xit("should solve brave puzzle",
+	it("should solve brave puzzle",
 		test(
 			`(letter B)
             (letter R)
@@ -85,11 +85,11 @@ describe("Brave puzzle Tests.", () => {
                         main: "brave"
                     },
                     results: [
-                        `B R A V E
-                            V E B R A
-                            R A V E B
-                            E B R A V
-                            A V E B R`
+                       `B R A V E
+                        V E B R A
+                        R A V E B
+                        E B R A V
+                        A V E B R`
 				]
 			}], { timeout: 60000 * 5 }
 		)

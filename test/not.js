@@ -118,16 +118,16 @@ describe("Not Tests.", () => {
 					query: "?(distinct (color 'a) (color 'b))",
 					results: [
 						`@(distinct @(color ..a) @(color ..b))[^!(equal (color ..a) (color ..b))] 
-							--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; a_5; node [shape = circle];
-								START -> b_2 [label = "b=yellow"]
-								START -> b_3 [label = "b=blue"]
-								START -> b_4 [label = "b=red"]
-								b_2 -> a_5 [label = "a=blue"]
-								b_2 -> a_5 [label = "a=red"]
-								b_3 -> a_5 [label = "a=yellow"]
-								b_3 -> a_5 [label = "a=red"]
-								b_4 -> a_5 [label = "a=yellow"]
-								b_4 -> a_5 [label = "a=blue"] 
+							--> digraph G { rankdir=LR; size="8,5" node [shape = doublecircle]; "a_5"; node [shape = circle];
+								START -> "b_2" [label = "b=yellow"]
+								START -> "b_3" [label = "b=blue"]
+								START -> "b_4" [label = "b=red"]
+								"b_2" -> "a_5" [label = "a=blue"]
+								"b_2" -> "a_5" [label = "a=red"]
+								"b_3" -> "a_5" [label = "a=yellow"]
+								"b_3" -> "a_5" [label = "a=red"]
+								"b_4" -> "a_5" [label = "a=yellow"]
+								"b_4" -> "a_5" [label = "a=blue"] 
 							}
 						`
 					]
@@ -147,11 +147,11 @@ describe("Not Tests.", () => {
 				results: [
 					`@(not @(number ..p) @(number ..q))[^!(equal (number ..p) (number ..q))]
 						--> digraph G {
-							rankdir=LR; size="8,5" node [shape = doublecircle]; p_4; node [shape = circle]; 
-								START -> q_2 [label = "q=0"]
-								START -> q_3 [label = "q=1"]
-								q_2 -> p_4 [label = "p=1"]
-								q_3 -> p_4 [label = "p=0"] 
+							rankdir=LR; size="8,5" node [shape = doublecircle]; "p_4"; node [shape = circle]; 
+								START -> "q_2" [label = "q=0"]
+								START -> "q_3" [label = "q=1"]
+								"q_2" -> "p_4" [label = "p=1"]
+								"q_3" -> "p_4" [label = "p=0"] 
 						}
 					`
 				]
@@ -186,16 +186,6 @@ describe("Not Tests.", () => {
 					query: "?(list (fruit 'a) (list (fruit 'b) (list)) " +
 						" ^(equal 'a 'b))",
 					results: [
-						/*
-						"@(list @(fruit apple) @(list @(fruit {{v$84 : banana papaya strawberry}}) @(list)))" +
-							"[^!(equal apple {{v$84 : banana papaya strawberry}})]",
-						"@(list @(fruit banana) @(list @(fruit {{v$84 : apple papaya strawberry}}) @(list)))" +
-							"[^!(equal banana {{v$84 : apple papaya strawberry}})]",
-						"@(list @(fruit papaya) @(list @(fruit {{v$84 : apple banana strawberry}}) @(list)))" +
-							"[^!(equal papaya {{v$84 : apple banana strawberry}})]",
-						"@(list @(fruit strawberry) @(list @(fruit {{v$84 : apple banana papaya}}) @(list)))" +
-							"[^!(equal strawberry {{v$84 : apple banana papaya}})]"
-						*/
 						/**
 						 * TODO: why this resutls don't have domains ? 
 						 */
@@ -255,7 +245,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a two number Set, query all",
+	it("Should declare a two number Set, query all",
 		test(
 			`(number 0)
             (number 1)
@@ -271,14 +261,15 @@ describe("Not Tests.", () => {
 				postProcessing: setStart,
 				results: [
 					"[0, 1]",
-					"[1, 0]",
-					"[[v$74: 0 1]]"
+      				"[0]",
+       				"[1, 0]",
+      				"[1]"
 				]
 			}]
 		)
 	);
 
-	xit("Should declare a number Set, 3 elements",
+	it("Should declare a number Set, 3 elements",
 		test(
 			`(number 0)
             (number 1)
@@ -303,6 +294,23 @@ describe("Not Tests.", () => {
 					postProcessing: setStart,
 					results: [
 						"[0, 1, 2]",
+						"[0, 1]",
+						"[0, 2, 1]",
+						"[0, 2]",
+						"[0]",
+						"[1, 0, 2]",
+						"[1, 0]",
+						"[1, 2, 0]",
+						"[1, 2]",
+						"[1]",
+						"[2, 0, 1]",
+						"[2, 0]",
+						"[2, 1, 0]",
+						"[2, 1]",
+						"[2]"
+
+						/*
+						"[0, 1, 2]",
 						"[0, 2, 1]",
 						"[1, 0, 2]",
 						"[1, 2, 0]",
@@ -311,14 +319,14 @@ describe("Not Tests.", () => {
 						"[[v$99: 0 1 2]]",
 						"[[v$99: 0 1], 2]",
 						"[[v$99: 0 2], 1]",
-						"[[v$99: 1 2], 0]"
+						"[[v$99: 1 2], 0]"*/
 					]
 				}
-			], { timeout: 60000 }
+			]
 		)
 	);
 
-	xit("Should declare a number Set, 4 elements",
+	it("Should declare a number Set, 4 elements",
 		test(
 			`(number 0)
             (number 1)
@@ -380,7 +388,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a number Set, 4 elements, all",
+	it("Should declare a number Set, 4 elements, all",
 		test(
 			`(number 0)
             (number 1)
@@ -400,46 +408,69 @@ describe("Not Tests.", () => {
 				postProcessing: setStart,
 				results: [
 					"[0, 1, 2, 3]",
+					"[0, 1, 2]",
 					"[0, 1, 3, 2]",
+					"[0, 1, 3]",
+					"[0, 1]",
 					"[0, 2, 1, 3]",
+					"[0, 2, 1]",
 					"[0, 2, 3, 1]",
+					"[0, 2, 3]",
+					"[0, 2]",
 					"[0, 3, 1, 2]",
+					"[0, 3, 1]",
 					"[0, 3, 2, 1]",
+					"[0, 3, 2]",
+					"[0, 3]",
+					"[0]",
 					"[1, 0, 2, 3]",
+					"[1, 0, 2]",
 					"[1, 0, 3, 2]",
+					"[1, 0, 3]",
+					"[1, 0]",
 					"[1, 2, 0, 3]",
+					"[1, 2, 0]",
 					"[1, 2, 3, 0]",
+					"[1, 2, 3]",
+					"[1, 2]",
 					"[1, 3, 0, 2]",
+					"[1, 3, 0]",
 					"[1, 3, 2, 0]",
+					"[1, 3, 2]",
+					"[1, 3]",
+					"[1]",
 					"[2, 0, 1, 3]",
+					"[2, 0, 1]",
 					"[2, 0, 3, 1]",
+					"[2, 0, 3]",
+					"[2, 0]",
 					"[2, 1, 0, 3]",
+					"[2, 1, 0]",
 					"[2, 1, 3, 0]",
+					"[2, 1, 3]",
+					"[2, 1]",
 					"[2, 3, 0, 1]",
+					"[2, 3, 0]",
 					"[2, 3, 1, 0]",
+					"[2, 3, 1]",
+					"[2, 3]",
+					"[2]",
 					"[3, 0, 1, 2]",
+					"[3, 0, 1]",
 					"[3, 0, 2, 1]",
+					"[3, 0, 2]",
+					"[3, 0]",
 					"[3, 1, 0, 2]",
+					"[3, 1, 0]",
 					"[3, 1, 2, 0]",
+					"[3, 1, 2]",
+					"[3, 1]",
 					"[3, 2, 0, 1]",
+					"[3, 2, 0]",
 					"[3, 2, 1, 0]",
-					"[[v$82: 0 1 2 3]]",
-					"[[v$82: 0 1 2], 3]",
-					"[[v$82: 0 1 3], 2]",
-					"[[v$82: 0 1], 2, 3]",
-					"[[v$82: 0 1], 3, 2]",
-					"[[v$82: 0 2 3], 1]",
-					"[[v$82: 0 2], 1, 3]",
-					"[[v$82: 0 2], 3, 1]",
-					"[[v$82: 0 3], 1, 2]",
-					"[[v$82: 0 3], 2, 1]",
-					"[[v$82: 1 2 3], 0]",
-					"[[v$82: 1 2], 0, 3]",
-					"[[v$82: 1 2], 3, 0]",
-					"[[v$82: 1 3], 0, 2]",
-					"[[v$82: 1 3], 2, 0]",
-					"[[v$82: 2 3], 0, 1]",
-					"[[v$82: 2 3], 1, 0]"
+					"[3, 2, 1]",
+					"[3, 2]",
+					"[3]"
 				]
 			}], { timeout: 60000 * 5 }
 		)

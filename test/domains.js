@@ -15,11 +15,11 @@ describe("Test domain extraction.", () => {
 				results: [
 					`@(number ..a) 
 					--> digraph G { 
-						rankdir=LR; size="8,5" node [shape = doublecircle]; a_2; node [shape = circle]; 
-						START -> a_2 [label = "a=0"] 
-						START -> a_2 [label = "a=1"] 
-						START -> a_2 [label = "a=2"] 
-						START -> a_2 [label = "a=3"] 
+						rankdir=LR; size="8,5" node [shape = doublecircle]; "a_2"; node [shape = circle]; 
+						START -> "a_2" [label = "a=0"] 
+						START -> "a_2" [label = "a=1"] 
+						START -> "a_2" [label = "a=2"] 
+						START -> "a_2" [label = "a=3"] 
 					}`
 				]
 			}]
@@ -39,15 +39,15 @@ describe("Test domain extraction.", () => {
 				results: [
 					`@(@(number ..x) @(number ..y))
 					--> digraph G {
-						rankdir=LR; size="8,5" node [shape = doublecircle]; y_3; node [shape = circle]; 
-						START -> x_2 [label = "x=0"]
-						START -> x_2 [label = "x=1"]
-						START -> x_2 [label = "x=2"]
-						START -> x_2 [label = "x=3"]
-						x_2 -> y_3 [label = "y=0"] 
-						x_2 -> y_3 [label = "y=1"] 
-						x_2 -> y_3 [label = "y=2"] 
-						x_2 -> y_3 [label = "y=3"] 
+						rankdir=LR; size="8,5" node [shape = doublecircle]; "y_3"; node [shape = circle]; 
+						START -> "x_2" [label = "x=0"]
+						START -> "x_2" [label = "x=1"]
+						START -> "x_2" [label = "x=2"]
+						START -> "x_2" [label = "x=3"]
+						"x_2" -> "y_3" [label = "y=0"] 
+						"x_2" -> "y_3" [label = "y=1"] 
+						"x_2" -> "y_3" [label = "y=2"] 
+						"x_2" -> "y_3" [label = "y=3"] 
 					}`
 				]
 			}]
