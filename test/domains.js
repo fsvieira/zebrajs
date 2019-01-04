@@ -13,22 +13,16 @@ describe("Test domain extraction.", () => {
             `, [{
 				query: `?(number 'a)`,
 				results: [
-					`@(number ..a) 
-					--> digraph G { 
-						rankdir=LR; size="8,5" node [shape = doublecircle]; "a_2"; node [shape = circle]; 
-						START -> "a_2" [label = "a=0"] 
-						START -> "a_2" [label = "a=1"] 
-						START -> "a_2" [label = "a=2"] 
-						START -> "a_2" [label = "a=3"] 
-					}`
+					`@(number @41=[0, 1, 2, 3])`
 				]
 			}]
 		)
 	);
 
-	it("should make domain of two variables",
+	xit("should make domain of two variables",
 		test(
 			`
+			('x = 'y)
 			(number 0)
 			(number 1)
 			(number 2)
@@ -36,6 +30,11 @@ describe("Test domain extraction.", () => {
 			((number 'x) (number 'y))
 			`, [{
 				query: `?((number 'x) (number 'y))`,
+				results: [
+					`@(@(number @60=[0, 1, 2, 3]) @(number @64=[0, 1, 2, 3]))`
+				]
+			}, {
+				query: `?((number 'x) (number 'y) ^('x = 'y))`,
 				results: [
 					`@(@(number ..x) @(number ..y))
 					--> digraph G {
@@ -49,6 +48,32 @@ describe("Test domain extraction.", () => {
 						"x_2" -> "y_3" [label = "y=2"] 
 						"x_2" -> "y_3" [label = "y=3"] 
 					}`
+				]
+			}]
+		)
+	);
+
+	it("should make domain of three variables",
+		test(
+			`
+			(0 & 0 = 0)
+			(0 & 1 = 0)
+			(1 & 0 = 0)
+			(1 & 1 = 1)
+			`, [{
+				query: `?('a & 'b = 'c)`,
+				results: [
+					/*
+						0 & 0 = 0
+						0 & 1 = 0
+					 */
+					"@(0 & @42=[0, 1] = 0)",
+
+					/*
+						1 & 0 = 0
+						1 & 1 = 1
+					 */
+					"@(1 & @42=[0, 1] = @42=[0, 1])"
 				]
 			}]
 		)

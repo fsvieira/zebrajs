@@ -33,7 +33,7 @@ describe("Types Tests.", () => {
 
             ('x : 'y ')
             `,
-            [
+            [/*
                 {
                     query: `?(* : int -> 'x -> real ')`,
                     results: [
@@ -47,20 +47,10 @@ describe("Types Tests.", () => {
                         ))
                     `,
                     results: [
-                        `@(x : ..tx @(y : ..ty @(* : ..tx -> ..ty -> .._ '$1)))
-                        --> digraph G {
-                            rankdir=LR; size="8,5" node [shape = doublecircle]; "__5"; node [shape = circle];
-                            START -> "tx_2" [label = "tx=int"]
-                            START -> "tx_3" [label = "tx=real"]
-                            "tx_2" -> "ty_6" [label = "ty=int"]
-                            "tx_2" -> "ty_4" [label = "ty=real"]
-                            "tx_3" -> "ty_4" [label = "ty=real"]
-                            "tx_3" -> "ty_4" [label = "ty=int"]
-                            "ty_4" -> "__5" [label = "_=real"]
-                            "ty_6" -> "__5" [label = "_=int"] 
-                        }`
+                        "@(x : int @(y : @146=[int, real] @(* : int -> @146=[int, real] -> @146=[int, real] ')))",
+                        "@(x : real @(y : @146=[int, real] @(* : real -> @146=[int, real] -> real ')))"
                     ]
-                },
+                },*/
                 {
                     // x * y / int
                     query: `
