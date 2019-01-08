@@ -57,7 +57,7 @@ describe("Types Tests.", () => {
                         ?(fn : 'r (x : 'tx (y : 'ty
                             (* : 'tx -> 'ty -> 'a (/ : 'a -> int -> 'r '))
                         )))
-                    `,/*
+                    `,
                     ztl: {
                         code: `
                             nextTypes:
@@ -73,7 +73,7 @@ describe("Types Tests.", () => {
                                 ' -> "".        
                         `,
                         main: "fn"
-                    },*/
+                    },
                     results: [
                         "fn: int -> int -> real",
                         "fn: int -> real -> real",

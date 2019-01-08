@@ -65,24 +65,14 @@ function replaceVariables (r, vs) {
 	return r;
 }
 
-function explode (r) {
-
-	if (r.type === 'domain') {
-		return r.data.slice();
-	}
-	else if (r.type === 'tuple') {
-
-		const rs = [];
-		for (let i=0; i<r.data.length; i++) {
-			const s = explode(r.data[i]);
-
-		}
-
+function explode (r, domains) {
+	if (domains.size) {
+		console.log("R => " + JSON.stringify(r));
+		console.log("D => " + JSON.stringify([...domains]));
 	}
 	else {
-
+		return r;
 	}
-	
 }
 
 function getPostProcessingFunction (query) {
@@ -117,10 +107,17 @@ function getPostProcessingFunction (query) {
 				return f(r);
 			}*/
 
-			console.log("DOMAINS => " + JSON.stringify(domains));
+			const d = new Map();
+			for (let i=0; i<domains.data.length; i++) {
+				const domain = domains.data[i];
+				console.log(JSON.stringify(domain));
+				d.set(domain.id, domain);
+			}
 
-			// const rs = explode(r);
-			console.log("==> " + JSON.stringify(r) + "\n\n");
+			// TODO: BUG: there is repeated domains, on global domains variable. 
+
+			const rs = explode(r, d);
+			console.log("==> " + JSON.stringify(rs) + "\n\n");
 
 			return f(r);
 		}
