@@ -2,8 +2,7 @@
 
 const should = require("should");
 const {Z} = require("../");
-const {toStringDomain} = require("../lib/utils");
-const FSA = require("fsalib");
+const {toString} = require("../lib/utils");
 
 const ZTL = require("ztl");
 
@@ -66,6 +65,26 @@ function replaceVariables (r, vs) {
 	return r;
 }
 
+function explode (r) {
+
+	if (r.type === 'domain') {
+		return r.data.slice();
+	}
+	else if (r.type === 'tuple') {
+
+		const rs = [];
+		for (let i=0; i<r.data.length; i++) {
+			const s = explode(r.data[i]);
+
+		}
+
+	}
+	else {
+
+	}
+	
+}
+
 function getPostProcessingFunction (query) {
 
 	let f = query.postProcessing;
@@ -78,6 +97,7 @@ function getPostProcessingFunction (query) {
 
 	if (f) {
 		return (r, domains) => {
+			/*
 			if (domains.type === 'domains') {
 				const fsa = FSA.fromJSON(domains.data);
 				const rs = words(fsa, domains.data.variables).map(w => {
@@ -95,11 +115,18 @@ function getPostProcessingFunction (query) {
 			}
 			else {
 				return f(r);
-			}
+			}*/
+
+			console.log("DOMAINS => " + JSON.stringify(domains));
+
+			// const rs = explode(r);
+			console.log("==> " + JSON.stringify(r) + "\n\n");
+
+			return f(r);
 		}
 	}
 
-	return ((r, domains) => toStringDomain(domains, r, true));
+	return (r => toString(r, true));
 }
 
 function test (definitions, queries, options) {
@@ -126,8 +153,8 @@ function test (definitions, queries, options) {
 
 			const db = await Z.connect(dbname);
 			await db.execute(definitions);
-			const DOMAINS = db.zvs.data.global("domains");
 			const QUERY = db.zvs.data.global("query");
+			const DOMAINS_ID = db.zvs.data.global("domains");
 
 			for (let q in queries) {
 				if (queries.hasOwnProperty(q)) {
@@ -174,7 +201,10 @@ function test (definitions, queries, options) {
 									b,
 									QUERY
 								),
-								db.zvs.getObject(b, DOMAINS)
+								db.zvs.getObject(
+									b,
+									DOMAINS_ID
+								)
 							);
 
 							if (rs instanceof Array) {
