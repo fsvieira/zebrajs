@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Test domain extraction.", () => {
-	it("should be a easy domain",
+	xit("should be a easy domain",
 		test(
             `
             (number 0)
@@ -19,7 +19,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	xit("should make domain of two variables",
+	it("should make domain of two variables",
 		test(
 			`
 			('x = 'y)
@@ -36,7 +36,11 @@ describe("Test domain extraction.", () => {
 			}, {
 				query: `?((number 'x) (number 'y) ^('x = 'y))`,
 				results: [
-					`@(@(number ..x) @(number ..y))
+					// WRONG: "@(@(number @60=[0, 1, 2, 3]) @(number @60=[0, 1, 2, 3]))",
+					  "@(@(number @60=[0, 1, 2, 3]) @(number @64=[0, 1, 2, 3]))"
+					  /*
+					`
+					@(@(number ..x) @(number ..y))
 					--> digraph G {
 						rankdir=LR; size="8,5" node [shape = doublecircle]; "y_3"; node [shape = circle]; 
 						START -> "x_2" [label = "x=0"]
@@ -47,13 +51,13 @@ describe("Test domain extraction.", () => {
 						"x_2" -> "y_3" [label = "y=1"] 
 						"x_2" -> "y_3" [label = "y=2"] 
 						"x_2" -> "y_3" [label = "y=3"] 
-					}`
+					}`*/
 				]
 			}]
 		)
 	);
 
-	it("should make domain of three variables",
+	xit("should make domain of three variables",
 		test(
 			`
 			(0 & 0 = 0)

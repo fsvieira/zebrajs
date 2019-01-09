@@ -133,7 +133,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	xit("Should query john likes people that like themselves.",
+	it("Should query john likes people that like themselves.",
 		test(
 			`(john likes wine ') # likes(john,wine).
 
@@ -161,7 +161,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	xit("Should query people about what they like (Extended).",
+	it("Should query people about what they like (Extended).",
 		test(
 			`(mary likes food ')  # likes(mary,food).
 			(mary likes wine ')   # likes(mary,wine).
@@ -186,26 +186,12 @@ describe("Prolog examples port Tests.", () => {
 				query: "?(john likes 'stuff ')",
 				results: [
 					// TODO: remove duplicated solutions.
-					`@(john likes ..stuff ') 
-						--> digraph G { 
-							rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle];
-								START -> "stuff_2" [label = "stuff=wine"]
-								START -> "stuff_2" [label = "stuff=mary"]
-							}`,
-					`@(john likes ..stuff @(..stuff likes wine ')) 
-						--> digraph G {
-							rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle]; 
-								START -> "stuff_2" [label = "stuff=mary"]
-								START -> "stuff_2" [label = "stuff=john"]
-							}`,
-					`@(john likes ..stuff @(mary likes ..stuff ')) 
-						--> digraph G {
-							rankdir=LR; size="8,5" node [shape = doublecircle]; "stuff_2"; node [shape = circle];
-								START -> "stuff_2" [label = "stuff=food"]
-								START -> "stuff_2" [label = "stuff=wine"]
-							}`,
-					"@(john likes john @(john likes wine @(mary likes wine ')))", 
-					"@(john likes mary @(mary likes wine '))", 
+					"@(john likes @102=[mary, wine] ')",
+					"@(john likes @132=[food, wine] @(mary likes @132=[food, wine] '))",
+					"@(john likes @140=[mary, john] @(@140=[mary, john] likes wine '))",
+					"@(john likes john @(john likes wine @(mary likes wine ')))",
+					// duplicated result.
+					"@(john likes mary @(mary likes wine '))",
 					"@(john likes peter @(peter likes peter '))[^!(equal peter john)]",
 					"@(john likes wine @(mary likes wine '))"
 				]
@@ -213,7 +199,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	xit("Should give no results to circular definition.",
+	it("Should give no results to circular definition.",
 		test(
 			// Query is not able to stop on their own.
 			"(john likes 'person ('person likes 'person '))", [{

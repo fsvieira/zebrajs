@@ -65,13 +65,87 @@ function replaceVariables (r, vs) {
 	return r;
 }
 
+function diffCombinations (domains) {
+    const results = [];
+    const d = domains.pop();
+
+    for (let k=0; k<d.data.length; k++) {
+        const value = d.data[k];
+        const r = [{id: d.id, value}];
+
+		if (domains.length) {
+            const ds = [];
+            for (let l=0; l<domains.length; l++) {
+                const d = domains[l];
+                const values = d.data.filter(v => v !== value);
+
+                if (values.length) {
+                    ds.push({
+                        id: d.id,
+                        data: values
+                    });
+                }
+                else {
+                    return;
+                }
+            }
+
+            const dr = diffCombinations(ds);
+
+            if (dr) {
+                for (j=0; j<dr.length; j++) {
+                    results.push(r.concat(dr[j]));
+                }
+            }
+            else {
+                return;
+            }
+        }
+        else {
+            results.push(r);
+        }
+    }
+
+    return results;
+}
+
+function replaceDomains (r, valuesTable) {
+	switch (r.type) {
+		case "domain":
+			return valuesTable.get(r.id);
+		case "tuple":
+			return {
+				type: 'tuple',
+				data: r.data.map(v => replaceDomains(v, valuesTable))
+			};
+		default:
+			return r;
+	}
+}
+
 function explode (r, domains) {
-	if (domains.size) {
-		console.log("R => " + JSON.stringify(r));
-		console.log("D => " + JSON.stringify([...domains]));
+	if (domains && domains.length) {
+		const comb = diffCombinations(domains);
+		
+		const results = [];
+
+		for (let i=0; i<comb.length; i++) {
+			const valuesTable = new Map();
+			const values = comb[i];
+
+			for (let j=0; j<values.length; j++) {
+				const v = values[j];
+
+				valuesTable.set(v.id, v.value);
+			}
+
+			results.push(replaceDomains(r, valuesTable));
+		}
+
+		return results;		
 	}
 	else {
-		return r;
+		return [r];
 	}
 }
 
@@ -87,38 +161,9 @@ function getPostProcessingFunction (query) {
 
 	if (f) {
 		return (r, domains) => {
-			/*
-			if (domains.type === 'domains') {
-				const fsa = FSA.fromJSON(domains.data);
-				const rs = words(fsa, domains.data.variables).map(w => {
-					const vs = {};
+			const rs = explode(r, domains.data);
 
-					for (let i=0; i<w.length; i++) {
-						const o = w[i];
-						vs[o.variable.id] = o.symbol;
-					}
-
-					return replaceVariables(r, vs);
-				});
-
-				return rs.map(f);
-			}
-			else {
-				return f(r);
-			}*/
-
-			const d = new Map();
-			for (let i=0; i<domains.data.length; i++) {
-				const domain = domains.data[i];
-				d.set(domain.id, domain);
-			}
-
-			// TODO: BUG: there is repeated domains, on global domains variable. 
-
-			const rs = explode(r, d);
-			console.log("==> " + JSON.stringify(rs) + "\n\n");
-
-			return f(r);
+			return rs.map(f);
 		}
 	}
 

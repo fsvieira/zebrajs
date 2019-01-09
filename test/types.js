@@ -33,7 +33,7 @@ describe("Types Tests.", () => {
 
             ('x : 'y ')
             `,
-            [/*
+            [
                 {
                     query: `?(* : int -> 'x -> real ')`,
                     results: [
@@ -50,7 +50,7 @@ describe("Types Tests.", () => {
                         "@(x : int @(y : @146=[int, real] @(* : int -> @146=[int, real] -> @146=[int, real] ')))",
                         "@(x : real @(y : @146=[int, real] @(* : real -> @146=[int, real] -> real ')))"
                     ]
-                },*/
+                },
                 {
                     // x * y / int
                     query: `
@@ -79,18 +79,6 @@ describe("Types Tests.", () => {
                         "fn: int -> real -> real",
                         "fn: real -> int -> real",
                         "fn: real -> real -> real"
-
-                        /*
-                        @(fn : real @(x : int @(y : int @(* : int -> int ->int @(/ : int -> int -> real ')))))
-                        @(fn : real @(x : int @(y : real @(* : int -> real -> real @(/ : real -> int -> real ')))));
-
-                        @(fn : real @(x : real @(y : int @(* : real -> int -> real @(/ : real -> int -> real ')))));
-                        @(fn : real @(x : real @(y : real @(* : real -> real -> real @(/ : real -> int -> real ')))));
-
-                        // DUP:
-                        @(fn : real @(x : real @(y : real @(* : real -> real -> real @(/ : real -> int -> real ')))))
-
-                        */
                     ]
                 }
             ]
