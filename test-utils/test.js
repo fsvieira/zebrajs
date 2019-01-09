@@ -110,7 +110,6 @@ function getPostProcessingFunction (query) {
 			const d = new Map();
 			for (let i=0; i<domains.data.length; i++) {
 				const domain = domains.data[i];
-				console.log(JSON.stringify(domain));
 				d.set(domain.id, domain);
 			}
 
