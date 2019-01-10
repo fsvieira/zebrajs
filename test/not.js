@@ -166,21 +166,7 @@ describe("Not Tests.", () => {
 					query: "?(list (fruit 'a) (list (fruit 'b) (list)) " +
 						" ^(equal 'a 'b))",
 					results: [
-						/**
-						 * TODO: why this resutls don't have domains ? 
-						 */
-						"@(list @(fruit apple) @(list @(fruit banana) @(list)))[^!(equal apple banana)]",
-						"@(list @(fruit apple) @(list @(fruit papaya) @(list)))[^!(equal apple papaya)]",
-						"@(list @(fruit apple) @(list @(fruit strawberry) @(list)))[^!(equal apple strawberry)]",
-						"@(list @(fruit banana) @(list @(fruit apple) @(list)))[^!(equal banana apple)]",
-						"@(list @(fruit banana) @(list @(fruit papaya) @(list)))[^!(equal banana papaya)]",
-						"@(list @(fruit banana) @(list @(fruit strawberry) @(list)))[^!(equal banana strawberry)]",
-						"@(list @(fruit papaya) @(list @(fruit apple) @(list)))[^!(equal papaya apple)]",
-						"@(list @(fruit papaya) @(list @(fruit banana) @(list)))[^!(equal papaya banana)]",
-						"@(list @(fruit papaya) @(list @(fruit strawberry) @(list)))[^!(equal papaya strawberry)]",
-						"@(list @(fruit strawberry) @(list @(fruit apple) @(list)))[^!(equal strawberry apple)]",
-						"@(list @(fruit strawberry) @(list @(fruit banana) @(list)))[^!(equal strawberry banana)]",
-						"@(list @(fruit strawberry) @(list @(fruit papaya) @(list)))[^!(equal strawberry papaya)]"
+						"@(list @(fruit @81=[banana, strawberry, apple, papaya]) @(list @(fruit @86=[banana, strawberry, apple, papaya]) @(list)))[^!(equal @81=[banana, strawberry, apple, papaya] @86=[banana, strawberry, apple, papaya])]"
 					]
 				}
 			]

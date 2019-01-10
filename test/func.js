@@ -4,7 +4,7 @@ const test = require("../test-utils/test");
 const ZTL = require("ztl");
 
 describe("Func tests.", () => {
-	it("Custom function for print query.",
+	xit("Custom function for print query.",
 		test(
 			`
             (yellow)
