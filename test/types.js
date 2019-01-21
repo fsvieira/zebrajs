@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Types Tests.", () => {
-	it("should types",
+	xit("should types",
 		test(
             `
             (* : int -> int -> int ')
