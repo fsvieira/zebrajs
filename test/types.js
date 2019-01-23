@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Types Tests.", () => {
-	xit("should types",
+	it("should types",
 		test(
             `
             (* : int -> int -> int ')
@@ -58,6 +58,7 @@ describe("Types Tests.", () => {
                             (* : 'tx -> 'ty -> 'a (/ : 'a -> int -> 'r '))
                         )))
                     `,
+                    /*
                     ztl: {
                         code: `
                             nextTypes:
@@ -73,12 +74,19 @@ describe("Types Tests.", () => {
                                 ' -> "".        
                         `,
                         main: "fn"
-                    },
+                    },*/
                     results: [
                         "fn: int -> int -> real",
                         "fn: int -> real -> real",
                         "fn: real -> int -> real",
                         "fn: real -> real -> real"
+
+                        //    f(x, y) = x * y / int 
+
+                        //    fn: int -> int -> int;
+                        //    fn: int -> int -> real;
+                        //    fn: int -> real -> real
+                        
                     ]
                 }
             ]
