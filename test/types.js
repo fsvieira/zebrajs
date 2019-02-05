@@ -47,8 +47,8 @@ describe("Types Tests.", () => {
                         ))
                     `,
                     results: [
-                        "@(x : int @(y : @146=[int, real] @(* : int -> @146=[int, real] -> @146=[int, real] ')))",
-                        "@(x : real @(y : @146=[int, real] @(* : real -> @146=[int, real] -> real ')))"
+                        "@(x : @142=[int, real] @(y : @142=[int, real] @(* : @142=[int, real] -> @142=[int, real] -> @142=[int, real] ')))",
+                        "@(x : @142=[int, real] @(y : @146=[int, real] @(* : @142=[int, real] -> @146=[int, real] -> real ')))"
                     ]
                 },
                 {
@@ -58,8 +58,7 @@ describe("Types Tests.", () => {
                             (* : 'tx -> 'ty -> 'a (/ : 'a -> int -> 'r '))
                         )))
                     `,
-                    /*
-                    ztl: {
+                    /*ztl: {
                         code: `
                             nextTypes:
                                 ('x : 'y 'r) -> " -> " 'y "" 'r | nextTypes,

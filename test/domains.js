@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Test domain extraction.", () => {
-	xit("should be a easy domain",
+	it("should be a easy domain",
 		test(
             `
             (number 0)
@@ -19,7 +19,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	xit("should make domain of two variables",
+	it("should make domain of two variables",
 		test(
 			`
 			('x = 'x)
@@ -43,7 +43,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	xit("should make domain of three variables",
+	it("should make domain of three variables",
 		test(
 			`
 			(0 & 0 = 0)
@@ -55,21 +55,21 @@ describe("Test domain extraction.", () => {
 				results: [
 					/*
 						0 & 0 = 0
-						0 & 1 = 0
-					 */
-					"@(0 & @42=[0, 1] = 0)",
+						1 & 1 = 1
+					*/
+					"@(@39=[0, 1] & @39=[0, 1] = @39=[0, 1])",
 
 					/*
+						0 & 1 = 0
 						1 & 0 = 0
-						1 & 1 = 1
 					 */
-					"@(1 & @42=[0, 1] = @42=[0, 1])"
+      				"@(@39=[0, 1] & @42=[0, 1] = 0)"
 				]
 			}]
 		)
 	);
 
-	xit("should create domains cartasian product result",
+	it("should create domains cartasian product result",
 		test(
 			`
 			(bit 0)
@@ -98,8 +98,10 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?(unfold 2 ' ')",
 				results: [
-					"Invalid domain!! and equal values are missing :D",
-					"@(unfold 2 @(bit @81=[0, 1]) @(unfold 1 @(bit @94=[0, 1]) @(unfold 0 @(bit @126=[0, 1]) ')))"
+					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @121=[0, 1]) @(unfold 0 @(bit 0) ')))",
+					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @121=[0, 1]) @(unfold 0 @(bit 1) ')))",
+					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @94=[0, 1]) @(unfold 0 @(bit 0) ')))",
+					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @94=[0, 1]) @(unfold 0 @(bit 1) ')))"
 				]
 			}]
 		)

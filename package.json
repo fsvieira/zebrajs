@@ -18,7 +18,7 @@
     "gulp-jshint": "^2.0.4",
     "gulp-mocha": "^5.0.0",
     "jscs": "^3.0.7",
-    "jshint": "^2.9.6",
+    "jshint": "^2.9.7",
     "mocha": "^5.2.0",
     "pegjs": "^0.10.0",
     "should": "^5.2.0"
@@ -112,7 +112,7 @@
   },
   "dependencies": {
     "fsalib": "^2.2.1",
-    "identicobjects": "^1.0.2",
+    "identicobjects": "^1.0.4",
     "ztl": "^1.0.0"
   }
 }
