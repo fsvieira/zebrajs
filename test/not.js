@@ -198,7 +198,7 @@ describe("Not Tests.", () => {
 						"[0, 1]",
 						"[1, 0]"
 					]
-				},
+			}/*,
 				{
 					query: `
     					?(set (number 'a)
@@ -208,7 +208,7 @@ describe("Not Tests.", () => {
 					`,
 					postProcessing: setStart,
 					results: []
-				}
+				}*/
 			]
 		)
 	);
