@@ -131,7 +131,6 @@ function explode (r, domains) {
 		 * TODO: there is a bug on domains, there is some repeated domains.
 		 */
 		domains = [...new Map(domains.map(v => [v.id, v])).values()];
-		console.log(JSON.stringify(domains) + "\n");
 
 		const header = domains.map(v => v.id);
 		const t = new Table(header);
@@ -140,10 +139,13 @@ function explode (r, domains) {
 		
 		const results = [];
 		for (let e of t.s.values()) {
-			console.log(JSON.stringify(e));
-
 			// TODO: we need to use io objects with cset table.
-			results.push(replaceDomains(r, new Map(header.map((id, i) => [id, {type: "constant", data: e[i]}]))));
+			if (e instanceof Array) {
+				results.push(replaceDomains(r, new Map(header.map((id, i) => [id, {type: "constant", data: e[i]}]))));
+			}
+			else {
+				results.push(replaceDomains(r, new Map(header.map((id, i) => [id, {type: "constant", data: e}]))));
+			}
 		}
 
 		/*
