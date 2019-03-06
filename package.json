@@ -111,6 +111,7 @@
     "validateQuoteMarks": "\""
   },
   "dependencies": {
+    "cset": "^1.0.11",
     "fsalib": "^2.2.1",
     "identicobjects": "^1.0.4",
     "ztl": "^1.0.0"

@@ -3,6 +3,7 @@
 const should = require("should");
 const {Z} = require("../");
 const {toString} = require("../lib/utils");
+const Table = require("../lib/manager/domains/table");
 
 const ZTL = require("ztl");
 
@@ -17,6 +18,7 @@ function normalize (s) {
 	;
 }
 
+/*
 function words (fsa, variables, state, prefix) {
 	prefix = prefix || [];
 
@@ -107,7 +109,7 @@ function diffCombinations (domains) {
     }
 
     return results;
-}
+}*/
 
 function replaceDomains (r, valuesTable) {
 	switch (r.type) {
@@ -125,6 +127,26 @@ function replaceDomains (r, valuesTable) {
 
 function explode (r, domains) {
 	if (domains && domains.length) {
+		/**
+		 * TODO: there is a bug on domains, there is some repeated domains.
+		 */
+		domains = [...new Map(domains.map(v => [v.id, v])).values()];
+		console.log(JSON.stringify(domains) + "\n");
+
+		const header = domains.map(v => v.id);
+		const t = new Table(header);
+
+		t.addENERow(domains.map(v => [v.id, v.data.map(v => v.data)]));
+		
+		const results = [];
+		for (let e of t.s.values()) {
+			console.log(JSON.stringify(e));
+
+			// TODO: we need to use io objects with cset table.
+			results.push(replaceDomains(r, new Map(header.map((id, i) => [id, {type: "constant", data: e[i]}]))));
+		}
+
+		/*
 		const comb = diffCombinations(domains);
 		
 		const results = [];
@@ -140,7 +162,7 @@ function explode (r, domains) {
 			}
 
 			results.push(replaceDomains(r, valuesTable));
-		}
+		}*/
 
 		return results;		
 	}

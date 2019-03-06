@@ -175,7 +175,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should declare a two number Set",
+	xit("Should declare a two number Set",
 		test(
 			`(number 0)
             (number 1)
@@ -198,7 +198,7 @@ describe("Not Tests.", () => {
 						"[0, 1]",
 						"[1, 0]"
 					]
-			}/*,
+			},
 				{
 					query: `
     					?(set (number 'a)
@@ -208,12 +208,12 @@ describe("Not Tests.", () => {
 					`,
 					postProcessing: setStart,
 					results: []
-				}*/
+				}
 			]
 		)
 	);
 
-	xit("Should declare a two number Set, query all",
+	it("Should declare a two number Set, query all",
 		test(
 			`(number 0)
             (number 1)
