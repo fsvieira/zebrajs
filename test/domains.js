@@ -13,7 +13,7 @@ describe("Test domain extraction.", () => {
             `, [{
 				query: `?(number 'a)`,
 				results: [
-					`@(number @41=[0, 1, 2, 3])`
+					`@(number @id$0=[0, 1, 2, 3])`
 				]
 			}]
 		)
@@ -31,13 +31,13 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?((number 'x) (number 'y))",
 				results: [
-					"@(@(number @58=[0, 1, 2, 3]) @(number @58=[0, 1, 2, 3]))",
-					"@(@(number @58=[0, 1, 2, 3]) @(number @62=[0, 1, 2, 3]))"
+					"@(@(number @id$3=[0, 1, 2, 3]) @(number @id$3=[0, 1, 2, 3]))",
+      				"@(@(number @id$4=[0, 1, 2, 3]) @(number @id$3=[0, 1, 2, 3]))"
 				]
 			}, {
 				query: "?((number 'x) (number 'y) ^('x = 'y))",
 				results: [
-					"@(@(number @72=[0, 1, 2, 3]) @(number @76=[0, 1, 2, 3]))[^!(@72=[0, 1, 2, 3] = @76=[0, 1, 2, 3])]"
+					"@(@(number @id$6=[0, 1, 2, 3]) @(number @id$5=[0, 1, 2, 3]))[^!(@id$6=[0, 1, 2, 3] = @id$5=[0, 1, 2, 3])]"
 				]
 			}]
 		)
@@ -54,16 +54,16 @@ describe("Test domain extraction.", () => {
 				query: "?('a & 'b = 'c)",
 				results: [
 					/*
+						0 & 1 = 0
+						1 & 0 = 0
+					*/
+					"@(@id$2=[0, 1] & @id$1=[0, 1] = 0)",
+
+					/*
 						0 & 0 = 0
 						1 & 1 = 1
 					*/
-					"@(@39=[0, 1] & @39=[0, 1] = @39=[0, 1])",
-
-					/*
-						0 & 1 = 0
-						1 & 0 = 0
-					 */
-      				"@(@39=[0, 1] & @42=[0, 1] = 0)"
+      				"@(@id$2=[0, 1] & @id$2=[0, 1] = @id$2=[0, 1])"
 				]
 			}]
 		)
@@ -80,8 +80,8 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?(list 'x (list 'y (list)))",
 				results: [
-					"@(list @(bit @69=[0, 1]) @(list @(bit @69=[0, 1]) @(list)))",
-      				"@(list @(bit @69=[0, 1]) @(list @(bit @81=[0, 1]) @(list)))"
+					"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$2=[0, 1]) @(list)))",
+      				"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$3=[0, 1]) @(list)))"
 				]
 			}]
 		)
@@ -98,6 +98,11 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?(unfold 2 ' ')",
 				results: [
+					// "@(unfold 2 @(bit @3$2=[1, 0]) @(unfold 1 @(bit @3$2=[1, 0]) @(unfold 0 @(bit @14$1=[0, 1]) ')))"
+					// 0 0 1
+					// 1 1 0
+					
+
 					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @121=[0, 1]) @(unfold 0 @(bit 0) ')))",
 					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @121=[0, 1]) @(unfold 0 @(bit 1) ')))",
 					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @94=[0, 1]) @(unfold 0 @(bit 0) ')))",

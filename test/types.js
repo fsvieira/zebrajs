@@ -47,8 +47,8 @@ describe("Types Tests.", () => {
                         ))
                     `,
                     results: [
-                        "@(x : @142=[int, real] @(y : @142=[int, real] @(* : @142=[int, real] -> @142=[int, real] -> @142=[int, real] ')))",
-                        "@(x : @142=[int, real] @(y : @146=[int, real] @(* : @142=[int, real] -> @146=[int, real] -> real ')))"
+                        "@(x : @id$28=[int, real] @(y : @id$27=[int, real] @(* : @id$28=[int, real] -> @id$27=[int, real] -> real ')))",
+                        "@(x : @id$28=[int, real] @(y : @id$28=[int, real] @(* : @id$28=[int, real] -> @id$28=[int, real] -> @id$28=[int, real] ')))"
                     ]
                 },
                 {
