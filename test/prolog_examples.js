@@ -27,7 +27,7 @@ describe("Prolog examples port Tests.", () => {
 				{
 					query: "?(mary likes 'stuff)",
 					results: [
-						"@(mary likes @53=[food, wine])"
+						"@(mary likes @id$0=[food, wine])"
 					]
 				}
 			]
@@ -44,7 +44,7 @@ describe("Prolog examples port Tests.", () => {
             `, [{
 				query: "?(john likes 'stuff 'p)",
 				results: [
-					"@(john likes @60=[food, wine] @(mary likes @60=[food, wine] '))"
+					"@(john likes @3$1=[food, wine] @(mary likes @3$1=[food, wine] '))"
 				]
 			}]
 		)
@@ -93,8 +93,8 @@ describe("Prolog examples port Tests.", () => {
 
 				query: "?(john likes 'stuff 'p)",
 				results: [
-					"@(john likes @63=[mary, john] @(@63=[mary, john] likes wine '))",
-					"@(john likes wine ')"
+					"@(john likes @3$2=[mary, john] @(@3$2=[mary, john] likes wine '))",
+					"@(john likes wine 'p)"
 				]
 			}]
 		)
@@ -120,11 +120,11 @@ describe("Prolog examples port Tests.", () => {
 			(john likes 'person ('person likes wine '))`, [{
 				query: "?(john likes 'stuff 'p)",
 				results: [
-					"@(john likes @109=[food, wine] @(mary likes @109=[food, wine] '))",
-      				"@(john likes @117=[mary, john] @(@117=[mary, john] likes wine '))",
-	  				"@(john likes @78=[mary, wine] 'p)",
+					"@(john likes @3$5=[food, wine] @(mary likes @3$5=[food, wine] '))",
+					"@(john likes @3$7=[mary, john] @(@3$7=[mary, john] likes wine '))",
+					"@(john likes @id$9=[wine, mary] 'p)",
 					"@(john likes john @(john likes wine @(mary likes wine ')))",
-					"@(john likes mary @(mary likes wine '))", 
+					"@(john likes mary @(mary likes wine '))",
 
 					// TODO: REMOVE REPEATED RESULTS LIKE THIS: 
 					"@(john likes wine @(mary likes wine '))"
@@ -154,8 +154,8 @@ describe("Prolog examples port Tests.", () => {
 				query: "?(john likes 'stuff 'p)",
 				results: [
 					"@(john likes john @(john likes wine '))",
-      				"@(john likes mary @(mary likes mary '))[^!(equal mary john)]",
-	   				"@(john likes wine ')"
+      				"@(john likes mary @(mary likes mary 'p))[^!(equal mary john)]",
+	   				"@(john likes wine 'p)"
 				]
 			}]
 		)
@@ -186,10 +186,11 @@ describe("Prolog examples port Tests.", () => {
 				query: "?(john likes 'stuff ')",
 				results: [
 					// TODO: remove duplicated solutions.
-					"@(john likes @102=[mary, wine] ')",
-					"@(john likes @132=[food, wine] @(mary likes @132=[food, wine] '))",
-					"@(john likes @140=[mary, john] @(@140=[mary, john] likes wine '))",
+					"@(john likes @3$5=[food, wine] @(mary likes @3$5=[food, wine] '))",
+					"@(john likes @3$7=[mary, john] @(@3$7=[mary, john] likes wine '))", 
+					"@(john likes @id$13=[wine, mary] ')",
 					"@(john likes john @(john likes wine @(mary likes wine ')))",
+
 					// duplicated result.
 					"@(john likes mary @(mary likes wine '))",
 					"@(john likes peter @(peter likes peter '))[^!(equal peter john)]",

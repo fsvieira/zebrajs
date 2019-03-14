@@ -117,7 +117,7 @@ describe("Not Tests.", () => {
 				{
 					query: "?(distinct (color 'a) (color 'b))",
 					results: [
-						"@(distinct @(color @68=[yellow, blue, red]) @(color @73=[yellow, blue, red]))[^!(equal (color @68=[yellow, blue, red]) (color @73=[yellow, blue, red]))]"
+						"@(distinct @(color @id$4=[yellow, blue, red]) @(color @id$3=[yellow, blue, red]))[^!(equal (color @id$4=[yellow, blue, red]) (color @id$3=[yellow, blue, red]))]"
 					]
 				}
 			]
@@ -133,7 +133,7 @@ describe("Not Tests.", () => {
             `, [{
 				query: "?(not (number 'p) (number 'q))",
 				results: [
-					"@(not @(number @52=[0, 1]) @(number @57=[0, 1]))[^!(equal (number @52=[0, 1]) (number @57=[0, 1]))]"
+					"@(not @(number @id$4=[0, 1]) @(number @id$3=[0, 1]))[^!(equal (number @id$4=[0, 1]) (number @id$3=[0, 1]))]"
 				]
 			}]
 		)
@@ -166,9 +166,7 @@ describe("Not Tests.", () => {
 					query: "?(list (fruit 'a) (list (fruit 'b) (list)) " +
 						" ^(equal 'a 'b))",
 					results: [
-						"@(list @(fruit @81=[banana, strawberry, apple, papaya]) @(list @(fruit @86=[banana, strawberry, apple, papaya]) @(list)))[^!(equal @81=[banana, strawberry, apple, papaya] @86=[banana, strawberry, apple, papaya])]"
-						// TODO: this have two repeated negations ? 
-						// "@(list @(fruit @81=[banana, strawberry, apple, papaya]) @(list @(fruit @86=[banana, strawberry, apple, papaya]) @(list)))[^!(equal @81=[banana, strawberry, apple, papaya] @86=[banana, strawberry, apple, papaya]) !(equal @81=[banana, strawberry, apple, papaya] @86=[banana, strawberry, apple, papaya])]"
+						"@(list @(fruit @id$6=[banana, strawberry, apple, papaya]) @(list @(fruit @id$5=[banana, strawberry, apple, papaya]) @(list)))[^!(equal @id$6=[banana, strawberry, apple, papaya] @id$5=[banana, strawberry, apple, papaya])]"
 					]
 				}
 			]
