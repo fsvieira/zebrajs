@@ -98,15 +98,21 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?(unfold 2 ' ')",
 				results: [
-					// "@(unfold 2 @(bit @3$2=[1, 0]) @(unfold 1 @(bit @3$2=[1, 0]) @(unfold 0 @(bit @14$1=[0, 1]) ')))"
+					"@(unfold 2 @(bit @14$1=[0, 1]) @(unfold 1 @(bit @14$1=[0, 1]) @(unfold 0 @(bit @14$1=[0, 1]) ')))",
+					// 0 0 0
+					// 1 1 1
+					
+					"@(unfold 2 @(bit @14$1=[0, 1]) @(unfold 1 @(bit @4$2=[0, 1]) @(unfold 0 @(bit @14$1=[0, 1]) ')))",
+					// 0 1 0
+					// 1 0 1
+
+      				"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @14$1=[0, 1]) @(unfold 0 @(bit @14$1=[0, 1]) ')))",
+					// 0 1 1
+					// 1 0 0
+					  
+					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @3$2=[0, 1]) @(unfold 0 @(bit @14$1=[0, 1]) ')))"
 					// 0 0 1
 					// 1 1 0
-					
-
-					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @121=[0, 1]) @(unfold 0 @(bit 0) ')))",
-					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @121=[0, 1]) @(unfold 0 @(bit 1) ')))",
-					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @94=[0, 1]) @(unfold 0 @(bit 0) ')))",
-					"@(unfold 2 @(bit @121=[0, 1]) @(unfold 1 @(bit @94=[0, 1]) @(unfold 0 @(bit 1) ')))"
 				]
 			}]
 		)
