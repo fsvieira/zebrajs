@@ -80,14 +80,14 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?(list 'x (list 'y (list)))",
 				results: [
-					"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$2=[0, 1]) @(list)))",
-      				"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$3=[0, 1]) @(list)))"
+					"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$3=[0, 1]) @(list)))",
+      				"@(list @(bit @3$3=[0, 1]) @(list @(bit @3$3=[0, 1]) @(list)))"
 				]
 			}]
 		)
 	);
 
-	it("should create domains cartasian product result (unfold)",
+	it("should create domains cartesian product result (unfold)",
 		test(
 			`
 			(bit 0)
@@ -98,21 +98,21 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?(unfold 2 ' ')",
 				results: [
-					"@(unfold 2 @(bit @14$1=[0, 1]) @(unfold 1 @(bit @14$1=[0, 1]) @(unfold 0 @(bit @14$1=[0, 1]) ')))",
-					// 0 0 0
-					// 1 1 1
-					
-					"@(unfold 2 @(bit @14$1=[0, 1]) @(unfold 1 @(bit @4$2=[0, 1]) @(unfold 0 @(bit @14$1=[0, 1]) ')))",
-					// 0 1 0
-					// 1 0 1
-
-      				"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @14$1=[0, 1]) @(unfold 0 @(bit @14$1=[0, 1]) ')))",
-					// 0 1 1
+					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @17$1=[0, 1]) @(unfold 0 @(bit @17$1=[0, 1]) ')))",
 					// 1 0 0
-					  
-					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @3$2=[0, 1]) @(unfold 0 @(bit @14$1=[0, 1]) ')))"
+					// 0 1 1
+
+					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @3$2=[0, 1]) @(unfold 0 @(bit @17$1=[0, 1]) ')))",
 					// 0 0 1
 					// 1 1 0
+
+					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @3$2=[0, 1]) @(unfold 0 @(bit @3$2=[0, 1]) ')))",
+					// 0 0 0
+					// 1 1 1 
+
+					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @4$2=[0, 1]) @(unfold 0 @(bit @3$2=[0, 1]) ')))"
+					// 0 1 0
+					// 1 0 1
 				]
 			}]
 		)
