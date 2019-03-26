@@ -281,7 +281,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should declare a number Set, 4 elements",
+	xit("Should declare a number Set, 4 elements",
 		test(
 			`(number 0)
             (number 1)
