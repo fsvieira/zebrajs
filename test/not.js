@@ -211,7 +211,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a two number Set, query all",
+	it("Should declare a two number Set, query all",
 		test(
 			`(number 0)
             (number 1)
@@ -235,7 +235,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a number Set, 3 elements",
+	it("Should declare a number Set, 3 elements",
 		test(
 			`(number 0)
             (number 1)
