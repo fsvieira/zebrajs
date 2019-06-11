@@ -304,7 +304,7 @@ describe("Not Tests.", () => {
 					')`,
 					postProcessing: setStart,
 					results: ["[0, 1, 2, 3]"]
-				},
+			},
 				{
 					query: `?(set (number 'a)
 		                (set (number 'b)
