@@ -64,7 +64,13 @@ describe("Test domain extraction.", () => {
 						0 & 0 = 0
 						1 & 1 = 1
 					*/
-					  "@(@id$2=[0, 1] & @id$2=[0, 1] = @id$2=[0, 1])"
+						"@(@id$2=[0, 1] & @id$2=[0, 1] = @id$2=[0, 1])"
+						
+					/*
+						@(0 & 1 = 0)
+						@(1 & 0 = 0)
+						@(@id$2=[0, 1] & @id$2=[0, 1] = @id$2=[0, 1])
+					*/
 				]
 			}]
 		)
@@ -99,6 +105,7 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?(unfold 2 ' ')",
 				results: [
+					/*
 					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @17$1=[0, 1]) @(unfold 0 @(bit @17$1=[0, 1]) ')))",
 					// 1 0 0
 					// 0 1 1
@@ -114,15 +121,25 @@ describe("Test domain extraction.", () => {
 					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @4$2=[0, 1]) @(unfold 0 @(bit @3$2=[0, 1]) ')))"
 					// 0 1 0
 					// 1 0 1
-
-					/*
-					"@(unfold 2 @(bit 0) @(unfold 1 @(bit 1) @(unfold 0 @(bit 0) ')))", 
-					"@(unfold 2 @(bit 0) @(unfold 1 @(bit 1) @(unfold 0 @(bit 1) ')))", 
-					"@(unfold 2 @(bit 1) @(unfold 1 @(bit 0) @(unfold 0 @(bit 0) ')))",
-					"@(unfold 2 @(bit 1) @(unfold 1 @(bit 0) @(unfold 0 @(bit 1) ')))",
-					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @3$2=[0, 1]) @(unfold 0 @(bit @3$2=[0, 1]) ')))",
-					"@(unfold 2 @(bit @3$2=[1, 0]) @(unfold 1 @(bit @3$2=[1, 0]) @(unfold 0 @(bit @17$1=[0, 1]) ')))"
 					*/
+
+
+					"@(unfold 2 @(bit @17$1=[0, 1]) @(unfold 1 @(bit @4$2=[1, 0]) @(unfold 0 @(bit @17$1=[0, 1]) ')))",
+					// 0 1 0
+					// 1 0 1
+
+					"@(unfold 2 @(bit @3$2=[0, 1]) @(unfold 1 @(bit @3$2=[0, 1]) @(unfold 0 @(bit @3$2=[0, 1]) ')))",
+					// 0 0 0
+					// 1 1 1
+
+					"@(unfold 2 @(bit @3$2=[1, 0]) @(unfold 1 @(bit @17$1=[0, 1]) @(unfold 0 @(bit @17$1=[0, 1]) ')))",
+					// 1 0 0
+					// 0 1 1
+
+					"@(unfold 2 @(bit @3$2=[1, 0]) @(unfold 1 @(bit @3$2=[1, 0]) @(unfold 0 @(bit @17$1=[0, 1]) ')))"
+					// 0 0 1
+					// 1 1 0
+
 				]
 			}]
 		)

@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Brave puzzle Tests.", () => {
-	xit("should solve brave puzzle",
+	it("should solve brave puzzle",
 		test(
 			`(letter B)
             (letter R)
