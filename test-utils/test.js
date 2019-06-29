@@ -18,99 +18,6 @@ function normalize (s) {
 	;
 }
 
-/*
-function words (fsa, variables, state, prefix) {
-	prefix = prefix || [];
-
-	if (variables.length) {
-		state = state || fsa.start;
-		
-		const variable = variables.shift();
-		const symbolTos = fsa.transitions.get(state);
-
-		let results = [];
-
-		if (symbolTos) {
-			for (let [symbol, to] of symbolTos) {
-				results = results.concat(
-					words(
-						fsa,
-						variables.slice(), 
-						to.values().next().value, 
-						prefix.concat({
-							variable,
-							symbol
-						})
-					)
-				);
-			}
-		}
-
-		return results;
-	}
-	else {
-		return [prefix];
-	}
-}
-
-function replaceVariables (r, vs) {
-	if (r.type === 'tuple') {
-		return {
-			...r,
-			data: r.data.map(r => replaceVariables(r, vs))
-		}
-	}
-	else if (r.type === 'domain') {
-		return vs[r.id];
-	}
-
-	return r;
-}
-
-function diffCombinations (domains) {
-    const results = [];
-    const d = domains.pop();
-
-    for (let k=0; k<d.data.length; k++) {
-        const value = d.data[k];
-        const r = [{id: d.id, value}];
-
-		if (domains.length) {
-            const ds = [];
-            for (let l=0; l<domains.length; l++) {
-                const d = domains[l];
-                const values = d.data.filter(v => v !== value);
-
-                if (values.length) {
-                    ds.push({
-                        id: d.id,
-                        data: values
-                    });
-                }
-                else {
-                    return;
-                }
-            }
-
-            const dr = diffCombinations(ds);
-
-            if (dr) {
-                for (j=0; j<dr.length; j++) {
-                    results.push(r.concat(dr[j]));
-                }
-            }
-            else {
-                return;
-            }
-        }
-        else {
-            results.push(r);
-        }
-    }
-
-    return results;
-}*/
-
 function replaceDomains (r, valuesTable) {
 	switch (r.type) {
 		case "domain":
@@ -147,24 +54,6 @@ function explode (r, domains) {
 				results.push(replaceDomains(r, new Map(header.map((id, i) => [id, {type: "constant", data: e}]))));
 			}
 		}
-
-		/*
-		const comb = diffCombinations(domains);
-		
-		const results = [];
-
-		for (let i=0; i<comb.length; i++) {
-			const valuesTable = new Map();
-			const values = comb[i];
-
-			for (let j=0; j<values.length; j++) {
-				const v = values[j];
-
-				valuesTable.set(v.id, v.value);
-			}
-
-			results.push(replaceDomains(r, valuesTable));
-		}*/
 
 		return results;		
 	}
