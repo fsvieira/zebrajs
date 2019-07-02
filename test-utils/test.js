@@ -4,6 +4,11 @@ const should = require("should");
 const {Z} = require("../");
 const {toString} = require("../lib/utils");
 const Table = require("../lib/manager/domains/table");
+const path = require("path");
+const fs = require("fs");
+const utils = require("../lib/utils");
+const reportsPath = path.join(process.cwd(), "reports");
+const mkdirp = require("mkdirp");
 
 const ZTL = require("ztl");
 
@@ -83,12 +88,63 @@ function getPostProcessingFunction (query) {
 	return (r => toString(r, true));
 }
 
+function report (zvs, report) {
+	if (report) {
+		const dir = path.join(reportsPath, report); 
+		mkdirp(path.join(reportsPath, report), err => {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				const branches = zvs.branches.branches;
+				const branchesStreams = {};
+
+				for (let branchId in branches) {
+					branchId = +branchId;
+					const branch = zvs.branches.getRawBranch(branchId);
+					const {
+						action,
+						args
+					} = branch.data;
+
+					const s = branchesStreams[action] = branchesStreams[action] || fs.createWriteStream(
+						path.join(dir, `${action}.txt`)
+					);
+
+					const rawArgs = JSON.stringify(args, null, '\t');
+					const argsStr = utils.branchArgs(zvs, branchId, branch);
+					const query = utils.toString(
+						zvs.getObject(
+							branchId,
+							zvs.data.global("query")
+						)
+					) || "<no query>";
+
+					s.write(
+						`\n\n------- ${branchId} --------\n` +
+						`action: ${action},\n` +
+						`args: ${argsStr},\n` +
+						`query: ${query},\n` +
+						`rawArgs: ${rawArgs}`
+					);
+				}
+
+				for (let action in branchesStreams) {
+					branchesStreams[action].end("\n");
+				}
+			}
+		});
+	}
+}
+
 function test (definitions, queries, options) {
 	const dbname = "zebra.testing.database";
 
 	should(definitions).be.type("string");
 	should(queries).be.instanceof(Array);
 	options = options || {};
+
+	let db;
 
 	return async function () {
 		try {
@@ -105,7 +161,7 @@ function test (definitions, queries, options) {
 				}
 			);
 
-			const db = await Z.connect(dbname);
+			db = await Z.connect(dbname);
 			await db.execute(definitions);
 			const QUERY = db.zvs.data.global("query");
 			const DOMAINS_ID = db.zvs.data.global("domains");
@@ -190,9 +246,15 @@ function test (definitions, queries, options) {
 				}
 			}
 
+			await report(db.zvs, options.report);
+
 			await Z.remove(dbname);
 		}
 		catch (e) {
+			if (db) {
+				await report(db.zvs, options.report);
+			}
+
 			await Z.remove(dbname);
 			throw e;
 		}

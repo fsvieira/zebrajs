@@ -7,6 +7,10 @@
     "lib": "lib"
   },
   "devDependencies": {
+    "@stryker-mutator/core": "^2.0.0",
+    "@stryker-mutator/javascript-mutator": "^2.0.0",
+    "@stryker-mutator/mocha-framework": "^2.0.0",
+    "@stryker-mutator/mocha-runner": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-conditional-compilation": "0.0.1",
     "babel-preset-env": "^1.7.0",
@@ -114,6 +118,7 @@
     "cset": "^2.0.0",
     "fsalib": "^2.2.1",
     "identicobjects": "^1.0.4",
+    "mkdirp": "^0.5.1",
     "ztl": "^1.0.0"
   }
 }
