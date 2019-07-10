@@ -88,14 +88,45 @@ function getPostProcessingFunction (query) {
 	return (r => toString(r, true));
 }
 
+function changesToString (zvs, changes, parentId, branchId) {
+	let s = "";
+
+	for (let pId in changes) {
+		const bId = changes[pId];
+
+		const r = utils.toString(
+				zvs.getObject(parentId, bId),
+				true
+			) + " => " +
+			utils.toString(
+				zvs.getObject(branchId, pId),
+				true
+			)
+		;
+
+		const l = r.length >= 80?1:80 - r.length;
+
+		s += r;
+		for (let i=0; i<l;  i++) {
+			s += " ";
+		}
+
+		s +=  `[${pId} -> ${bId}]\n`
+	}
+
+	return s;
+}
+
 function report (zvs, report) {
 	if (report) {
-		const dir = path.join(reportsPath, report); 
+		const dir = path.join(reportsPath, report);
+
 		mkdirp(path.join(reportsPath, report), err => {
 			if (err) {
 				console.log(err);
 			}
 			else {
+				const error = fs.createWriteStream(path.join(dir, "__errors.txt"));
 				const branches = zvs.branches.branches;
 				const branchesStreams = {};
 
@@ -103,13 +134,17 @@ function report (zvs, report) {
 					branchId = +branchId;
 					const branch = zvs.branches.getRawBranch(branchId);
 					const {
-						action,
-						args
-					} = branch.data;
+						data: {
+							action,
+							args,
+							parent
+						},
+						metadata: {changes}
+					} = branch;
 
-					const s = branchesStreams[action] = branchesStreams[action] || fs.createWriteStream(
-						path.join(dir, `${action}.txt`)
-					);
+					const parentId = parent instanceof Array?branchId:parent;
+					const sPath = path.join(dir, `${action}.txt`);
+					const s = branchesStreams[action] = branchesStreams[action] || fs.createWriteStream(sPath);
 
 					const rawArgs = JSON.stringify(args, null, '\t');
 					const argsStr = utils.branchArgs(zvs, branchId, branch);
@@ -120,18 +155,40 @@ function report (zvs, report) {
 						)
 					) || "<no query>";
 
-					s.write(
-						`\n\n------- ${branchId} --------\n` +
+
+					const DOMAINS_ID = zvs.data.global("domains");
+					const domainsData = zvs.getData(branchId, DOMAINS_ID);
+					const domainsIDs = zvs.getData(branchId, domainsData.data)
+					const jsonDomains = zvs.getObject(branchId, DOMAINS_ID);
+
+					const reportString = `\n\n------- ${branchId} --------\n` +
 						`action: ${action},\n` +
 						`args: ${argsStr},\n` +
 						`query: ${query},\n` +
-						`rawArgs: ${rawArgs}`
-					);
+						`rawArgs: ${rawArgs}\n` +
+						`domainsData: ${JSON.stringify(domainsData)}\n` +
+						`domainsIDs: ${JSON.stringify(domainsIDs)}\n` +
+						`rawDomains: ${JSON.stringify(jsonDomains, null, '\t')}\n` + 
+						`domains: ${utils.toString(jsonDomains, null, '\t')}\n` +
+						`\n-- changes --\n${changesToString(zvs, changes, parentId, branchId)}\n`
+					;
+
+					if (domainsIDs && new Set(domainsIDs).size !== domainsIDs.length) {
+						error.write(
+							"\n\n--- ERROR: Duplicated Domains ---\n" +
+							sPath + "\n" +
+							reportString
+						);
+					}
+
+					s.write(reportString);
 				}
 
 				for (let action in branchesStreams) {
 					branchesStreams[action].end("\n");
 				}
+
+				error.end("\n");
 			}
 		});
 	}
@@ -147,6 +204,8 @@ function test (definitions, queries, options) {
 	let db;
 
 	return async function () {
+		let stop = () => {};
+
 		try {
 			if (options.timeout) {
 				this.timeout(options.timeout);
@@ -165,6 +224,21 @@ function test (definitions, queries, options) {
 			await db.execute(definitions);
 			const QUERY = db.zvs.data.global("query");
 			const DOMAINS_ID = db.zvs.data.global("domains");
+
+			if (options.report && options.timedReport) {
+				const id = setInterval(
+					() => report(
+						db.zvs, 
+						path.join(
+							options.report, 
+							new Date().toISOString()
+						)
+					),
+					options.timedReport
+				);
+
+				stop = () => clearInterval(id);
+			}
 
 			for (let q in queries) {
 				if (queries.hasOwnProperty(q)) {
@@ -246,11 +320,13 @@ function test (definitions, queries, options) {
 				}
 			}
 
+			stop();
 			await report(db.zvs, options.report);
-
+			
 			await Z.remove(dbname);
 		}
 		catch (e) {
+			stop();
 			if (db) {
 				await report(db.zvs, options.report);
 			}
