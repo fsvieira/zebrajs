@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Test domain extraction.", () => {
-	it("should be a easy domain",
+	xit("should be a easy domain",
 		test(
             `
             (number 0)
@@ -34,16 +34,16 @@ describe("Test domain extraction.", () => {
 					"@(@(number @id$3=[0, 1, 2, 3]) @(number @id$3=[0, 1, 2, 3]))",
 					"@(@(number @id$4=[1, 2, 3, 0]) @(number @id$3=[0, 1, 2, 3]))"
 				]
-			}, {
+			}, /*{
 				query: "?((number 'x) (number 'y) ^('x = 'y))",
 				results: [
 					"@(@(number @id$6=[1, 2, 3, 0]) @(number @id$5=[0, 1, 2, 3]))[^!(@id$6=[1, 2, 3, 0] = @id$5=[0, 1, 2, 3])]"
 				]
-			}]
+			}*/]
 		)
 	);
 
-	it("should make domain of three variables",
+	xit("should make domain of three variables",
 		test(
 			`
 			(0 & 0 = 0)
@@ -75,7 +75,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	it("should create domains cartasian product result",
+	xit("should create domains cartasian product result",
 		test(
 			`
 			(bit 0)
@@ -93,7 +93,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	it("should create domains cartesian product result (unfold)",
+	xit("should create domains cartesian product result (unfold)",
 		test(
 			`
 			(bit 0)
