@@ -117,6 +117,62 @@ function changesToString (zvs, changes, parentId, branchId) {
 	return s;
 }
 
+function reportCheckDomains(zvs, branchId, reportString, sPath, error) {
+	const DOMAINS_ID = zvs.data.global("domains");
+	const domainsData = zvs.getData(branchId, DOMAINS_ID);
+
+	if (domainsData.data) {
+		const domainsIDs = zvs.getData(branchId, domainsData.data)
+			.map(id => zvs.branches.getDataId(branchId, id));
+
+		const QUERY_ID = zvs.data.global("query");
+		const query = zvs.getData(branchId, QUERY_ID);
+		const queryData = zvs.getData(branchId, query.data);
+		const negations = zvs.getData(branchId, query.negations);
+
+		const ids = [...queryData, ...(negations || [])].map(
+			id => zvs.branches.getDataId(branchId, id)
+		);
+		
+		const queryDomainIds = [];
+
+		while (ids.length) {
+			const id = ids.pop();
+
+			const data = zvs.getData(branchId, id);
+			const type = zvs.getData(branchId, data.type);
+
+			if (type === 'domain') {
+				if (!queryDomainIds.includes(id)) {
+					queryDomainIds.push(id);
+				}
+			}
+			else if (type === 'tuple') {
+				const tupleData = zvs.getData(branchId, data.data);
+
+				for (let i=0; i<tupleData.length; i++) {
+					const tID = zvs.branches.getDataId(branchId, tupleData[i]);
+					ids.push(tID);
+				}
+			}
+		}
+
+		const intersect = domainsIDs.filter(id => queryDomainIds.includes(id));
+
+		if (intersect.length !== domainsIDs.length || intersect.length !== queryDomainIds.length) {
+			error.write(
+				"\n\n--- ERROR: Query Domains, mismatch query domains body ---\n" +
+				JSON.stringify(domainsIDs) + "(D) & "+ 
+				JSON.stringify(queryDomainIds) + "(Q) = " +
+				JSON.stringify(intersect) + "(D&Q)\n\n"+  
+				sPath + "\n" +
+				reportString
+			);
+		}
+
+	}
+}
+
 function report (zvs, report) {
 	if (report) {
 		const dir = path.join(reportsPath, report);
@@ -162,6 +218,7 @@ function report (zvs, report) {
 					const jsonDomains = zvs.getObject(branchId, DOMAINS_ID);
 
 					const reportString = `\n\n------- ${branchId} --------\n` +
+						`parent: ${JSON.stringify(parentId)},\n` +
 						`action: ${action},\n` +
 						`args: ${argsStr},\n` +
 						`query: ${query},\n` +
@@ -172,6 +229,8 @@ function report (zvs, report) {
 						`domains: ${utils.toString(jsonDomains, null, '\t')}\n` +
 						`\n-- changes --\n${changesToString(zvs, changes, parentId, branchId)}\n`
 					;
+
+					reportCheckDomains(zvs, branchId, reportString, sPath, error);
 
 					if (domainsIDs && new Set(domainsIDs).size !== domainsIDs.length) {
 						error.write(
