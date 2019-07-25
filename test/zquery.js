@@ -1,6 +1,5 @@
 "use strict";
 
-// const test = require("../test-utils/unity-test");
 const test = require("../test-utils/test");
 
 describe("ZQuery Tests.", () => {
