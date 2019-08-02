@@ -91,8 +91,12 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?(list 'x (list 'y (list)))",
 				results: [
+					/*
 					"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$3=[1, 0]) @(list)))", 
-					"@(list @(bit @3$3=[0, 1]) @(list @(bit @3$3=[0, 1]) @(list)))"
+					"@(list @(bit @3$3=[0, 1]) @(list @(bit @3$3=[0, 1]) @(list)))"*/
+
+					"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$2=[0, 1]) @(list)))",
+      				"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$3=[1, 0]) @(list)))"
 				]
 			}]
 		)

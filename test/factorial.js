@@ -293,11 +293,12 @@ describe("Factorial Parser Tests.", () => {
 				},
 
 				// fac(4) = 24
+				/*
 				{
 					query: "?(fac (nat (nat (nat (nat (nat 0))))) 'r ')",
 					postProcessing: fac,
 					results: [24]
-				}
+				}*/
 			], { timeout: 60000 * 5 }
 		)
 	);
