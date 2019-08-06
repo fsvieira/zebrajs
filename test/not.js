@@ -22,7 +22,7 @@ describe("Not Tests.", () => {
 
 	const setStart = (r) => ztl.fn.setStart(r);
 
-	xit("Simple not",
+	it("Simple not",
 		test(
 			`(equal 'x 'x)
 			 (blue)
@@ -33,7 +33,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Simple not, no constants",
+	it("Simple not, no constants",
 		test(
 			"(equal 'x 'x) ('x)", [{
 				query: "?('x ^(equal 'x yellow))",
@@ -42,7 +42,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Not evaluation order",
+	it("Not evaluation order",
 		test(
 			"(equal 'x 'x) ('x)", [{
 				query: "?(equal ('x) (yellow) ^(equal ('x) (blue)))",
@@ -54,7 +54,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Declare a not equal",
+	it("Declare a not equal",
 		test(
 			`(color 'a)
 			 (equal 'x 'x)
@@ -103,7 +103,7 @@ describe("Not Tests.", () => {
             (distinct 'x 'y ^(equal 'x 'y))
 			`, 
 			[
-				/*{
+				{
 					query: "?(distinct (color yellow) (color yellow))",
 					results: []
 				},
@@ -113,7 +113,7 @@ describe("Not Tests.", () => {
 						"@(distinct @(color yellow) @(color blue))" +
 						"[^!(equal (color yellow) (color blue))]"
 					]
-				},*/
+				},
 				{
 					query: "?(distinct (color 'a) (color 'b))",
 					results: [
