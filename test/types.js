@@ -33,7 +33,7 @@ describe("Types Tests.", () => {
 
             ('x : 'y ')
             `,
-            [
+            [/*
                 {
                     query: `?(* : int -> 'x -> real ')`,
                     results: [
@@ -50,7 +50,7 @@ describe("Types Tests.", () => {
                         "@(x : @id$28=[int, real] @(y : @id$27=[real, int] @(* : @id$28=[int, real] -> @id$27=[real, int] -> real ')))",
                         "@(x : @id$28=[int, real] @(y : @id$28=[int, real] @(* : @id$28=[int, real] -> @id$28=[int, real] -> @id$28=[int, real] ')))"
                     ]
-                },
+                },*/
                 {
                     // x * y / int
                     query: `
@@ -58,6 +58,7 @@ describe("Types Tests.", () => {
                             (* : 'tx -> 'ty -> 'a (/ : 'a -> int -> 'r '))
                         )))
                     `,
+                    /*
                     ztl: {
                         code: `
                             nextTypes:
@@ -73,7 +74,7 @@ describe("Types Tests.", () => {
                                 ' -> "".        
                         `,
                         main: "fn"
-                    },
+                    },*/
                     results: [
                         "fn: int -> int -> real",
                         "fn: int -> real -> real",
@@ -81,7 +82,10 @@ describe("Types Tests.", () => {
                         "fn: real -> real -> real"
                     ]
                 }
-            ]
+            ],
+            {
+				report: "types"
+			}
         )
     )
 });
