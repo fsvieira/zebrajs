@@ -185,7 +185,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a two number Set",
+	it("Should declare a two number Set",
 		test(
 			`(number 0)
             (number 1)
@@ -209,7 +209,6 @@ describe("Not Tests.", () => {
 						"[1, 0]"
 					]
 				},
-				/*
 				{
 					query: `
     					?(set (number 'a)
@@ -219,12 +218,12 @@ describe("Not Tests.", () => {
 					`,
 					postProcessing: setStart,
 					results: []
-				}*/
+				}
 			]
 		)
 	);
 
-	xit("Should declare a two number Set, query all",
+	it("Should declare a two number Set, query all",
 		test(
 			`(number 0)
             (number 1)
@@ -248,7 +247,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a number Set, 3 elements",
+	it("Should declare a number Set, 3 elements",
 		test(
 			`(number 0)
             (number 1)
@@ -260,14 +259,14 @@ describe("Not Tests.", () => {
             )
 
             (equal 'x 'x)
-            `, [/*{
+            `, [{
 					query: `?(set (number 0)
 	                    (set (number 1)
 	                    (set (number 2) (set) ') ')
 					')`,
 					postProcessing: setStart,
 					results: ["[0, 1, 2]"]
-				},*/
+				},
 				{
 					query: "?(set (number 'a) 'tail ')",
 					postProcessing: setStart,
@@ -298,7 +297,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a number Set, 4 elements",
+	it("Should declare a number Set, 4 elements",
 		test(
 			`(number 0)
             (number 1)
@@ -360,7 +359,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a number Set, 4 elements, all",
+	it("Should declare a number Set, 4 elements, all",
 		test(
 			`(number 0)
             (number 1)

@@ -88,7 +88,6 @@ describe("Factorial Parser Tests.", () => {
 					postProcessing: add,
 					results: [1]
 				},
-
 				// 2 + 3 = 5
 				{
 					query:
@@ -96,7 +95,6 @@ describe("Factorial Parser Tests.", () => {
 					postProcessing: add,
 					results: [5]
 				},
-
 				// 3 + 2 = 5
 				{
 					query:
@@ -112,11 +110,15 @@ describe("Factorial Parser Tests.", () => {
 					postProcessing: add,
 					results: [4]
 				}
-			]
+			]/*,
+			{
+				report: "fadd",
+				timedReport: 1000
+			}*/
 		)
 	);
 
-	xit("Should declare a mul func",
+	it("Should declare a mul func",
 		test(
 			`
             # Nat
@@ -221,7 +223,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	xit("Should declare a factorial func",
+	it("Should declare a factorial func",
 		test(
 			`
             # Nat
