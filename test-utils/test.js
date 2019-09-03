@@ -195,7 +195,7 @@ function report (zvs, report) {
 							args,
 							parent
 						},
-						metadata: {changes}
+						metadata: {changes, status}
 					} = branch;
 
 					const parentId = parent instanceof Array?branchId:parent;
@@ -208,7 +208,7 @@ function report (zvs, report) {
 						zvs.getObject(
 							branchId,
 							zvs.data.global("query")
-						)
+						), true
 					) || "<no query>";
 
 
@@ -227,6 +227,7 @@ function report (zvs, report) {
 						`domainsIDs: ${JSON.stringify(domainsIDs)}\n` +
 						`rawDomains: ${JSON.stringify(jsonDomains, null, '\t')}\n` + 
 						`domains: ${utils.toString(jsonDomains, null, '\t')}\n` +
+						`status: ${JSON.stringify(status)}\n` +
 						`\n-- changes --\n${changesToString(zvs, changes, parentId, branchId)}\n`
 					;
 

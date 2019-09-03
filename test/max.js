@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Get the max solution.", () => {
-	it("Declare a number set, get the max number set with all elements.",
+	xit("Declare a number set, get the max number set with all elements.",
 		test(
 			`(number 0)
             (number 1)

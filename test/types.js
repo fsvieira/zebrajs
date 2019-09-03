@@ -34,12 +34,12 @@ describe("Types Tests.", () => {
             ('x : 'y ')
             `,
             [
-                {
+                /*{
                     query: `?(* : int -> 'x -> real ')`,
                     results: [
                         "@(* : int -> real -> real ')"
                     ]
-                },
+                },*/
                 {
                     query: `
                         ?(x : 'tx (y : 'ty
@@ -47,8 +47,8 @@ describe("Types Tests.", () => {
                         ))
                     `,
                     results: [
-                        "@(x : @id$28=[int, real] @(y : @id$27=[real, int] @(* : @id$28=[int, real] -> @id$27=[real, int] -> real ')))",
-                        "@(x : @id$28=[int, real] @(y : @id$28=[int, real] @(* : @id$28=[int, real] -> @id$28=[int, real] -> @id$28=[int, real] ')))"
+                        "@(x : @id$26=[int, real] @(y : @id$25=[real, int] @(* : @id$26=[int, real] -> @id$25=[real, int] -> real ')))",
+                        "@(x : @id$26=[int, real] @(y : @id$26=[int, real] @(* : @id$26=[int, real] -> @id$26=[int, real] -> @id$26=[int, real] ')))"
                     ]
                 },
                 {

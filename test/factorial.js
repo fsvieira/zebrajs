@@ -223,7 +223,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	it("Should declare a factorial func",
+	xit("Should declare a factorial func",
 		test(
 			`
             # Nat
