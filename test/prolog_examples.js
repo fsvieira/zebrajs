@@ -30,7 +30,10 @@ describe("Prolog examples port Tests.", () => {
 						"@(mary likes @id$0=[food, wine])"
 					]
 				}
-			]
+			],
+            {
+                timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -46,7 +49,10 @@ describe("Prolog examples port Tests.", () => {
 				results: [
 					"@(john likes @3$1=[food, wine] @(mary likes @3$1=[food, wine] '))"
 				]
-			}]
+			}],
+            {
+                timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -66,7 +72,10 @@ describe("Prolog examples port Tests.", () => {
 
 				query: "?(john likes 'stuff 'p)",
 				results: []
-			}]
+			}],
+            {
+                timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -96,7 +105,10 @@ describe("Prolog examples port Tests.", () => {
 					"@(john likes @3$2=[mary, john] @(@3$2=[mary, john] likes wine '))",
 					"@(john likes wine 'p)"
 				]
-			}]
+			}],
+            {
+                timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -129,7 +141,10 @@ describe("Prolog examples port Tests.", () => {
 					// TODO: REMOVE REPEATED RESULTS LIKE THIS: 
 					"@(john likes wine @(mary likes wine '))"
 				]
-			}]
+			}],
+            {
+                timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -157,7 +172,10 @@ describe("Prolog examples port Tests.", () => {
       				"@(john likes mary @(mary likes mary 'p))[^!(equal mary john)]",
 	   				"@(john likes wine 'p)"
 				]
-			}]
+			}],
+            {
+                timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -196,7 +214,10 @@ describe("Prolog examples port Tests.", () => {
 					"@(john likes peter @(peter likes peter '))[^!(equal peter john)]",
 					"@(john likes wine @(mary likes wine '))"
 				]
-			}]
+			}],
+            {
+                timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -206,7 +227,10 @@ describe("Prolog examples port Tests.", () => {
 			"(john likes 'person ('person likes 'person '))", [{
 				query: "?(john likes 'stuff 'p)",
 				results: []
-			}], { depth: 7 }
+			}], { 
+				depth: 7,
+                timeout: 1000 * 60 * 5
+			}
 		)
 	);
 });

@@ -69,7 +69,10 @@ describe("Func tests.", () => {
 					"isabel is noémia daughter.",
 					"joana is noémia daughter."
 				]
-			}]
+			}],
+            {
+                timeout: 1000 * 60
+			}
 		)
 	);
 

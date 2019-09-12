@@ -100,7 +100,7 @@ class SessionFilter extends Session {
 
             while (this.running) {
 				const {value: {action, data, destination}, done} = await this.queue.get();
-				console.log(action);
+				// console.log(action);
                 const f = Session.actions[action];
 
                 if (f) {

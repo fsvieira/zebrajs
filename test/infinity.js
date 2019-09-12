@@ -12,7 +12,7 @@ describe("Inifinity tests.", () => {
 					"@(nat @(nat 0))",
 					"@(nat @(nat @(nat 0)))"
 				]
-			}], { depth: 5 }
+			}], { depth: 5, timeout: 1000 * 60 * 5 }
 		)
 	);
 
@@ -31,7 +31,7 @@ describe("Inifinity tests.", () => {
 					"@(a @(b stop))",
 					"@(a stop)"
 				]
-			}], { depth: 7 }
+			}], { depth: 7, timeout: 1000 * 60 * 5 }
 		)
 	);
 

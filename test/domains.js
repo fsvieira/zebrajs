@@ -15,7 +15,10 @@ describe("Test domain extraction.", () => {
 				results: [
 					`@(number @id$0=[0, 1, 2, 3])`
 				]
-			}]
+			}],
+			{
+				timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -41,9 +44,9 @@ describe("Test domain extraction.", () => {
 					"@(@(number @id$6=[0, 1, 2, 3]) @(number @id$5=[1, 2, 3, 0]))[^!(@id$6=[0, 1, 2, 3] = @id$5=[1, 2, 3, 0]) !(@id$6=[0, 1, 2, 3] = @id$5=[1, 2, 3, 0])]"
 				]
 			}],
-			/*{
-				report: "domains_two_variables"
-			}*/
+			{
+				timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -74,7 +77,10 @@ describe("Test domain extraction.", () => {
 						@(1 & 0 = 0)
 					*/
 				]
-			}]
+			}],
+			{
+				timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -92,7 +98,10 @@ describe("Test domain extraction.", () => {
 					"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$3=[1, 0]) @(list)))",
       		"@(list @(bit @3$3=[0, 1]) @(list @(bit @3$3=[0, 1]) @(list)))"
 				]
-			}]
+			}],
+			{
+				timeout: 1000 * 60 * 5
+			}
 		)
 	);
 
@@ -123,10 +132,10 @@ describe("Test domain extraction.", () => {
 					// 1 0 0
 					// 0 1 1
 				]
-			}]/*,
+			}],
 			{
-				report: "domains_unfold"
-			}*/
+				timeout: 1000 * 60 * 5
+			}
 		)
 	);
 });

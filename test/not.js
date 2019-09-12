@@ -129,7 +129,8 @@ describe("Not Tests.", () => {
 						// "@(distinct @(color @id$4=[yellow, blue, red]) @(color @id$3=[blue, red, yellow]))[^!(equal (color @id$4=[yellow, blue, red]) (color @id$3=[blue, red, yellow]))]"
 					]
 				}
-			]
+			],
+			{timeout: 1000 * 60 * 5}
 		)
 	);
 
@@ -145,7 +146,8 @@ describe("Not Tests.", () => {
 					// "@(not @(number @id$4=[0, 1]) @(number @id$3=[1, 0]))[^!(equal (number @id$4=[0, 1]) (number @id$3=[1, 0]))]"
 					"@(not @(number @id$4=[0, 1]) @(number @id$3=[1, 0]))[^!(equal (number @id$4=[0, 1]) (number @id$3=[1, 0])) !(equal (number @id$4=[0, 1]) (number @id$3=[1, 0]))]"
 				]
-			}]
+			}],
+			{timeout: 1000 * 60 * 5}
 		)
 	);
 
@@ -181,7 +183,8 @@ describe("Not Tests.", () => {
 						// "@(list @(fruit @id$6=[banana, apple, papaya, strawberry]) @(list @(fruit @id$5=[strawberry, apple, papaya, banana]) @(list)))[^!(equal @id$6=[banana, apple, papaya, strawberry] @id$5=[strawberry, apple, papaya, banana])]"
 					]
 				}
-			]
+			],
+			{timeout: 1000 * 60 * 5}
 		)
 	);
 
@@ -219,7 +222,8 @@ describe("Not Tests.", () => {
 					postProcessing: setStart,
 					results: []
 				}
-			]
+			],
+			{timeout: 1000 * 60 * 5}
 		)
 	);
 
@@ -243,7 +247,8 @@ describe("Not Tests.", () => {
        				"[1, 0]",
       				"[1]"
 				]
-			}]
+			}],
+			{timeout: 1000 * 60 * 5}
 		)
 	);
 
@@ -290,9 +295,7 @@ describe("Not Tests.", () => {
 				}
 			],
 			{
-				timeout: 1000 * 60 * 2,
-				/*report: "not_set_3",
-				timedReport: 1000 * 60*/
+				timeout: 1000 * 60 * 5
 			}
 		)
 	);
@@ -355,11 +358,14 @@ describe("Not Tests.", () => {
 						"[3, 2, 1, 0]"
 					]
 				}
-			], { timeout: 60000 * 10 }
+			], { 
+				timeout: 60000 * 10,
+				report: "set_4"
+			}
 		)
 	);
 
-	it("Should declare a number Set, 4 elements, all",
+	xit("Should declare a number Set, 4 elements, all",
 		test(
 			`(number 0)
             (number 1)

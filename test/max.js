@@ -43,7 +43,11 @@ describe("Get the max solution.", () => {
 					"[2, 0, 1]",
 					"[2, 1, 0]"
 				]
-			}], { timeout: 5 * 60 * 1000 }
+            }], { 
+                timeout: 5 * 60 * 1000,
+                report: "max",
+                timedReport: 100
+            }
 		)
 	);
 });
