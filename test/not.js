@@ -300,7 +300,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a number Set, 4 elements",
+	it("Should declare a number Set, 4 elements",
 		test(
 			`(number 0)
             (number 1)
@@ -359,13 +359,12 @@ describe("Not Tests.", () => {
 					]
 				}
 			], { 
-				timeout: 60000 * 10,
-				report: "set_4"
+				timeout: 60000 * 20
 			}
 		)
 	);
 
-	xit("Should declare a number Set, 4 elements, all",
+	it("Should declare a number Set, 4 elements, all",
 		test(
 			`(number 0)
             (number 1)
@@ -449,7 +448,7 @@ describe("Not Tests.", () => {
 					"[3, 2]",
 					"[3]"
 				]
-			}], { timeout: 60000 * 5 }
+			}], { timeout: 60000 * 20 }
 		)
 	);
 });
