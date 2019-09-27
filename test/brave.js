@@ -91,7 +91,7 @@ describe("Brave puzzle Tests.", () => {
                         E B R A V
                         A V E B R`
 				]
-			}], { timeout: 60000 * 5 }
+			}], { timeout: 60000 * 35 }
 		)
 	);
 });
