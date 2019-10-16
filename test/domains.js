@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Test domain extraction.", () => {
-	it("should be a easy domain",
+	xit("should be a easy domain",
 		test(
             `
             (number 0)
@@ -22,7 +22,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	it("should make domain of two variables",
+	xit("should make domain of two variables",
 		test(
 			`
 			('x = 'x)
@@ -84,7 +84,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	it("should create domains cartasian product result",
+	xit("should create domains cartasian product result",
 		test(
 			`
 			(bit 0)
@@ -105,7 +105,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	it("should create domains cartesian product result (unfold)",
+	xit("should create domains cartesian product result (unfold)",
 		test(
 			`
 			(bit 0)
