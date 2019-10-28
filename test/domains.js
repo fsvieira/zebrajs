@@ -13,7 +13,10 @@ describe("Test domain extraction.", () => {
             `, [{
 				query: `?(number 'a)`,
 				results: [
-					`@(number @id$0=[0, 1, 2, 3])`
+					"@(number 0)",
+					"@(number 1)",
+					"@(number 2)",
+					"@(number 3)"
 				]
 			}],
 			{
@@ -22,7 +25,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	xit("should make domain of two variables",
+	it("should make domain of two variables",
 		test(
 			`
 			('x = 'x)
@@ -50,7 +53,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	it("should make domain of three variables",
+	xit("should make domain of three variables",
 		test(
 			`
 			(0 & 0 = 0)
@@ -60,22 +63,10 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?('a & 'b = 'c)",
 				results: [
-					/*
-						0 & 1 = 0
-						1 & 0 = 0
-					*/
-					"@(@id$2=[0, 1] & @id$1=[1, 0] = 0)",
-
-					/*
-						0 & 0 = 0
-						1 & 1 = 1
-					*/
-					"@(@id$2=[0, 1] & @id$2=[0, 1] = @id$2=[0, 1])"
-						
-					/*
-						@(0 & 1 = 0)
-						@(1 & 0 = 0)
-					*/
+					"@(0 & 0 = 0)",
+					"@(0 & 1 = 0)",
+					"@(1 & 0 = 0)",
+					"@(1 & 1 = 1)"
 				]
 			}],
 			{

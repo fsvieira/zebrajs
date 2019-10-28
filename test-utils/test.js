@@ -2,7 +2,7 @@
 
 const should = require("should");
 const {Z} = require("../");
-const {toString} = require("../lib/utils");
+const {toValuesStrings} = require("../lib/utils");
 const Table = require("../lib/manager/domains/table");
 const path = require("path");
 const fs = require("fs");
@@ -79,13 +79,13 @@ function getPostProcessingFunction (query) {
 
 	if (f) {
 		return (r, domains) => {
-			const rs = explode(r, domains.data);
+			const rs = explode(r, domains);
 
 			return rs.map(f);
 		}
 	}
 
-	return (r => toString(r, true));
+	return ((zvs, b, r, domains) => [...toValuesStrings(zvs, b, r, domains, true)]);
 }
 
 function changesToString (zvs, changes, parentId, branchId) {
@@ -341,14 +341,13 @@ function test (definitions, queries, options) {
 						for (let i=0; i<results.length; i++) {
 							const b = results[i];
 							const rs = f(
+								db.zvs,
+								b,
 								db.zvs.getObject(
 									b,
 									QUERY
 								),
-								db.zvs.getObject(
-									b,
-									DOMAINS_ID
-								)
+								db.zvs.branches.getDomains(b)
 							);
 
 							if (rs instanceof Array) {
