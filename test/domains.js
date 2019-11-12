@@ -34,13 +34,27 @@ describe("Test domain extraction.", () => {
 			(number 2)
 			(number 3)
 			((number 'x) (number 'y))
-			`, [{
+			`, [/*{
 				query: "?((number 'x) (number 'y))",
 				results: [
-					"@(@(number @id$3=[0, 1, 2, 3]) @(number @id$3=[0, 1, 2, 3]))",
-					"@(@(number @id$4=[0, 1, 2, 3]) @(number @id$3=[1, 2, 3, 0]))"
+					"@(@(number 0) @(number 0))",
+					"@(@(number 0) @(number 1))",
+					"@(@(number 0) @(number 2))",
+					"@(@(number 0) @(number 3))",
+					"@(@(number 1) @(number 0))",
+					"@(@(number 1) @(number 1))",
+					"@(@(number 1) @(number 2))",
+					"@(@(number 1) @(number 3))",
+					"@(@(number 2) @(number 0))",
+					"@(@(number 2) @(number 1))",
+					"@(@(number 2) @(number 2))",
+					"@(@(number 2) @(number 3))",
+					"@(@(number 3) @(number 0))",
+					"@(@(number 3) @(number 1))",
+					"@(@(number 3) @(number 2))",
+					"@(@(number 3) @(number 3))"
 				]
-			}, {
+			}, */{
 				query: "?((number 'x) (number 'y) ^('x = 'y))",
 				results: [
 					// TODO: remove duplicated negations ?? 

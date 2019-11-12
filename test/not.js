@@ -134,7 +134,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should declare simple not.",
+	xit("Should declare simple not.",
 		test(
 			`(number 0)
             (number 1)
@@ -151,7 +151,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should declare a list",
+	xit("Should declare a list",
 		test(
 			`(list)
             (list 'item (list ' '))
@@ -188,7 +188,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should declare a two number Set",
+	xit("Should declare a two number Set",
 		test(
 			`(number 0)
             (number 1)
@@ -227,7 +227,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should declare a two number Set, query all",
+	xit("Should declare a two number Set, query all",
 		test(
 			`(number 0)
             (number 1)
@@ -252,7 +252,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should declare a number Set, 3 elements",
+	xit("Should declare a number Set, 3 elements",
 		test(
 			`(number 0)
             (number 1)
@@ -300,7 +300,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should declare a number Set, 4 elements",
+	xit("Should declare a number Set, 4 elements",
 		test(
 			`(number 0)
             (number 1)
@@ -364,7 +364,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should declare a number Set, 4 elements, all",
+	xit("Should declare a number Set, 4 elements, all",
 		test(
 			`(number 0)
             (number 1)
