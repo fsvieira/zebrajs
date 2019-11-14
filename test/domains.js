@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Test domain extraction.", () => {
-	xit("should be a easy domain",
+	it("should be a easy domain",
 		test(
             `
             (number 0)
@@ -34,7 +34,8 @@ describe("Test domain extraction.", () => {
 			(number 2)
 			(number 3)
 			((number 'x) (number 'y))
-			`, [/*{
+			`, 
+			[{
 				query: "?((number 'x) (number 'y))",
 				results: [
 					"@(@(number 0) @(number 0))",
@@ -54,11 +55,21 @@ describe("Test domain extraction.", () => {
 					"@(@(number 3) @(number 2))",
 					"@(@(number 3) @(number 3))"
 				]
-			}, */{
+			}, {
 				query: "?((number 'x) (number 'y) ^('x = 'y))",
 				results: [
-					// TODO: remove duplicated negations ?? 
-					"@(@(number @id$6=[0, 1, 2, 3]) @(number @id$5=[1, 2, 3, 0]))[^!(@id$6=[0, 1, 2, 3] = @id$5=[1, 2, 3, 0]) !(@id$6=[0, 1, 2, 3] = @id$5=[1, 2, 3, 0])]"
+					"@(@(number 0) @(number 1))[^!(0 = 1) !(0 = 1)]",
+					"@(@(number 0) @(number 2))[^!(0 = 2) !(0 = 2)]",
+					"@(@(number 0) @(number 3))[^!(0 = 3) !(0 = 3)]", 
+					"@(@(number 1) @(number 0))[^!(1 = 0) !(1 = 0)]",
+					"@(@(number 1) @(number 2))[^!(1 = 2) !(1 = 2)]",
+					"@(@(number 1) @(number 3))[^!(1 = 3) !(1 = 3)]",
+					"@(@(number 2) @(number 0))[^!(2 = 0) !(2 = 0)]",
+					"@(@(number 2) @(number 1))[^!(2 = 1) !(2 = 1)]",
+					"@(@(number 2) @(number 3))[^!(2 = 3) !(2 = 3)]",
+					"@(@(number 3) @(number 0))[^!(3 = 0) !(3 = 0)]",
+					"@(@(number 3) @(number 1))[^!(3 = 1) !(3 = 1)]",
+					"@(@(number 3) @(number 2))[^!(3 = 2) !(3 = 2)]"
 				]
 			}],
 			{
@@ -67,7 +78,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	xit("should make domain of three variables",
+	it("should make domain of three variables",
 		test(
 			`
 			(0 & 0 = 0)
@@ -89,7 +100,7 @@ describe("Test domain extraction.", () => {
 		)
 	);
 
-	xit("should create domains cartasian product result",
+	it("should create domains cartasian product result",
 		test(
 			`
 			(bit 0)
@@ -100,8 +111,10 @@ describe("Test domain extraction.", () => {
 			`, [{
 				query: "?(list 'x (list 'y (list)))",
 				results: [
-					"@(list @(bit @3$2=[0, 1]) @(list @(bit @3$3=[1, 0]) @(list)))",
-      		"@(list @(bit @3$3=[0, 1]) @(list @(bit @3$3=[0, 1]) @(list)))"
+				  	"@(list @(bit 0) @(list @(bit 0) @(list)))",
+					"@(list @(bit 0) @(list @(bit 1) @(list)))",
+					"@(list @(bit 1) @(list @(bit 0) @(list)))",
+					"@(list @(bit 1) @(list @(bit 1) @(list)))"
 				]
 			}],
 			{

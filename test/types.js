@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Types Tests.", () => {
-	it("should types",
+	xit("should types",
 		test(
             `
             (* : int -> int -> int ')
@@ -86,7 +86,6 @@ describe("Types Tests.", () => {
                 }
             ],
             {
-                // report: "types",
                 timeout: 1000 * 60
 			}
         )

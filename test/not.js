@@ -22,7 +22,7 @@ describe("Not Tests.", () => {
 
 	const setStart = (r) => ztl.fn.setStart(r);
 
-	it("Simple not",
+	xit("Simple not",
 		test(
 			`(equal 'x 'x)
 			 (blue)
@@ -33,7 +33,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Simple not, no constants",
+	xit("Simple not, no constants",
 		test(
 			"(equal 'x 'x) ('x)", [{
 				query: "?('x ^(equal 'x yellow))",
@@ -42,7 +42,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Not evaluation order",
+	xit("Not evaluation order",
 		test(
 			"(equal 'x 'x) ('x)", [{
 				query: "?(equal ('x) (yellow) ^(equal ('x) (blue)))",
@@ -56,7 +56,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Declare a not equal",
+	xit("Declare a not equal",
 		test(
 			`(color 'a)
 			 (equal 'x 'x)
@@ -99,7 +99,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	it("Should make distinct tuples",
+	xit("Should make distinct tuples",
 		test(
 			`(color yellow)
             (color blue)
