@@ -151,7 +151,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	xit("Should query john likes people that like themselves.",
+	it("Should query john likes people that like themselves.",
 		test(
 			`(john likes wine ') # likes(john,wine).
 
@@ -182,7 +182,7 @@ describe("Prolog examples port Tests.", () => {
 		)
 	);
 
-	xit("Should query people about what they like (Extended).",
+	it("Should query people about what they like (Extended).",
 		test(
 			`(mary likes food ')  # likes(mary,food).
 			(mary likes wine ')   # likes(mary,wine).
@@ -206,16 +206,14 @@ describe("Prolog examples port Tests.", () => {
             (equal 'x 'x)`, [{
 				query: "?(john likes 'stuff ')",
 				results: [
-					// TODO: remove duplicated solutions.
-					"@(john likes @3$5=[food, wine] @(mary likes @3$5=[food, wine] '))",
-					"@(john likes @3$7=[mary, john] @(@3$7=[mary, john] likes wine '))", 
-					"@(john likes @id$13=[wine, mary] ')",
+					"@(john likes food @(mary likes food '))",
+					"@(john likes john @(john likes wine '))",
 					"@(john likes john @(john likes wine @(mary likes wine ')))",
-
-					// duplicated result.
+					"@(john likes mary ')",
 					"@(john likes mary @(mary likes wine '))",
 					"@(john likes peter @(peter likes peter '))[^!(equal peter john)]",
-					"@(john likes wine @(mary likes wine '))",
+					"@(john likes wine ')",
+					"@(john likes wine @(mary likes wine '))"
 				]
 			}],
             {

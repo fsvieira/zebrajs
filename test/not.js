@@ -22,7 +22,7 @@ describe("Not Tests.", () => {
 
 	const setStart = (r) => ztl.fn.setStart(r);
 
-	xit("Simple not",
+	it("Simple not",
 		test(
 			`(equal 'x 'x)
 			 (blue)
@@ -33,7 +33,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Simple not, no constants",
+	it("Simple not, no constants",
 		test(
 			"(equal 'x 'x) ('x)", [{
 				query: "?('x ^(equal 'x yellow))",
@@ -42,7 +42,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Not evaluation order",
+	it("Not evaluation order",
 		test(
 			"(equal 'x 'x) ('x)", [{
 				query: "?(equal ('x) (yellow) ^(equal ('x) (blue)))",
@@ -56,7 +56,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Declare a not equal",
+	it("Declare a not equal",
 		test(
 			`(color 'a)
 			 (equal 'x 'x)
@@ -99,7 +99,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should make distinct tuples",
+	it("Should make distinct tuples",
 		test(
 			`(color yellow)
             (color blue)
@@ -125,8 +125,12 @@ describe("Not Tests.", () => {
 				{
 					query: "?(distinct (color 'a) (color 'b))",
 					results: [
-						"@(distinct @(color @id$4=[yellow, blue, red]) @(color @id$3=[blue, red, yellow]))[^!(equal (color @id$4=[yellow, blue, red]) (color @id$3=[blue, red, yellow])) !(equal (color @id$4=[yellow, blue, red]) (color @id$3=[blue, red, yellow]))]"
-						// "@(distinct @(color @id$4=[yellow, blue, red]) @(color @id$3=[blue, red, yellow]))[^!(equal (color @id$4=[yellow, blue, red]) (color @id$3=[blue, red, yellow]))]"
+						"@(distinct @(color blue) @(color red))[^!(equal (color blue) (color red)) !(equal (color blue) (color red))]",
+						"@(distinct @(color blue) @(color yellow))[^!(equal (color blue) (color yellow)) !(equal (color blue) (color yellow))]",
+						"@(distinct @(color red) @(color blue))[^!(equal (color red) (color blue)) !(equal (color red) (color blue))]",
+						"@(distinct @(color red) @(color yellow))[^!(equal (color red) (color yellow)) !(equal (color red) (color yellow))]",
+						"@(distinct @(color yellow) @(color blue))[^!(equal (color yellow) (color blue)) !(equal (color yellow) (color blue))]",
+						"@(distinct @(color yellow) @(color red))[^!(equal (color yellow) (color red)) !(equal (color yellow) (color red))]"
 					]
 				}
 			],
@@ -134,7 +138,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare simple not.",
+	it("Should declare simple not.",
 		test(
 			`(number 0)
             (number 1)
@@ -143,15 +147,15 @@ describe("Not Tests.", () => {
             `, [{
 				query: "?(not (number 'p) (number 'q))",
 				results: [
-					// "@(not @(number @id$4=[0, 1]) @(number @id$3=[1, 0]))[^!(equal (number @id$4=[0, 1]) (number @id$3=[1, 0]))]"
-					"@(not @(number @id$4=[0, 1]) @(number @id$3=[1, 0]))[^!(equal (number @id$4=[0, 1]) (number @id$3=[1, 0])) !(equal (number @id$4=[0, 1]) (number @id$3=[1, 0]))]"
+					"@(not @(number 0) @(number 1))[^!(equal (number 0) (number 1)) !(equal (number 0) (number 1))]",
+					"@(not @(number 1) @(number 0))[^!(equal (number 1) (number 0)) !(equal (number 1) (number 0))]"
 				]
 			}],
 			{timeout: 1000 * 60 * 5}
 		)
 	);
 
-	xit("Should declare a list",
+	it("Should declare a list",
 		test(
 			`(list)
             (list 'item (list ' '))
@@ -179,8 +183,18 @@ describe("Not Tests.", () => {
 						" ^(equal 'a 'b))",
 					results: [
 						// TODO: remove duplicated negations ??
-						"@(list @(fruit @id$6=[banana, strawberry, apple, papaya]) @(list @(fruit @id$5=[strawberry, apple, papaya, banana]) @(list)))[^!(equal @id$6=[banana, strawberry, apple, papaya] @id$5=[strawberry, apple, papaya, banana]) !(equal @id$6=[banana, strawberry, apple, papaya] @id$5=[strawberry, apple, papaya, banana])]"
-						// "@(list @(fruit @id$6=[banana, apple, papaya, strawberry]) @(list @(fruit @id$5=[strawberry, apple, papaya, banana]) @(list)))[^!(equal @id$6=[banana, apple, papaya, strawberry] @id$5=[strawberry, apple, papaya, banana])]"
+						"@(list @(fruit apple) @(list @(fruit banana) @(list)))[^!(equal apple banana) !(equal apple banana)]",
+						"@(list @(fruit apple) @(list @(fruit papaya) @(list)))[^!(equal apple papaya) !(equal apple papaya)]",
+						"@(list @(fruit apple) @(list @(fruit strawberry) @(list)))[^!(equal apple strawberry) !(equal apple strawberry)]",
+						"@(list @(fruit banana) @(list @(fruit apple) @(list)))[^!(equal banana apple) !(equal banana apple)]",
+						"@(list @(fruit banana) @(list @(fruit papaya) @(list)))[^!(equal banana papaya) !(equal banana papaya)]",
+						"@(list @(fruit banana) @(list @(fruit strawberry) @(list)))[^!(equal banana strawberry) !(equal banana strawberry)]",
+						"@(list @(fruit papaya) @(list @(fruit apple) @(list)))[^!(equal papaya apple) !(equal papaya apple)]",
+						"@(list @(fruit papaya) @(list @(fruit banana) @(list)))[^!(equal papaya banana) !(equal papaya banana)]",
+						"@(list @(fruit papaya) @(list @(fruit strawberry) @(list)))[^!(equal papaya strawberry) !(equal papaya strawberry)]",
+						"@(list @(fruit strawberry) @(list @(fruit apple) @(list)))[^!(equal strawberry apple) !(equal strawberry apple)]",
+						"@(list @(fruit strawberry) @(list @(fruit banana) @(list)))[^!(equal strawberry banana) !(equal strawberry banana)]",
+						"@(list @(fruit strawberry) @(list @(fruit papaya) @(list)))[^!(equal strawberry papaya) !(equal strawberry papaya)]"
 					]
 				}
 			],

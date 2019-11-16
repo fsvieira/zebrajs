@@ -139,6 +139,9 @@ function test (definitions, queries, options) {
 						let r = [];
 						for (let i=0; i<results.length; i++) {
 							const b = results[i];
+
+							const domains = db.zvs.branches.getDomains(b);
+
 							const rs = f(
 								db.zvs,
 								b,
@@ -146,7 +149,7 @@ function test (definitions, queries, options) {
 									b,
 									QUERY
 								),
-								db.zvs.branches.getDomains(b)
+								domains
 							);
 
 							if (rs instanceof Array) {
