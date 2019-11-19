@@ -52,7 +52,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	xit("Should declare a add func",
+	it("Should declare a add func",
 		test(
 			`
             (nat 0)
@@ -218,7 +218,7 @@ describe("Factorial Parser Tests.", () => {
 					postProcessing: mul,
 					results: [6]
 				}
-			], { timeout: 5000 }
+			], { timeout: 1000 * 60 }
 		)
 	);
 
