@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Types Tests.", () => {
-	xit("should types",
+	it("should types",
 		test(
             `
             (* : int -> int -> int ')
@@ -33,7 +33,7 @@ describe("Types Tests.", () => {
 
             ('x : 'y ')
             `,
-            [
+            [/*
                 {
                     query: `?(* : int -> 'x -> real ')`,
                     results: [
@@ -53,7 +53,7 @@ describe("Types Tests.", () => {
                         "@(x : real @(y : real @(* : real -> real -> real ')))"
                   
                     ]
-                },
+                },*/
                 {
                     // x * y / int
                     query: `

@@ -5,6 +5,7 @@ const ZTL = require("ztl");
 
 describe("Factorial Parser Tests.", () => {
 	const ztl = new ZTL();
+
 	ztl.compile(`
 		decimal:
 			(nat 0) -> 0,
@@ -117,7 +118,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	xit("Should declare a mul func",
+	it("Should declare a mul func",
 		test(
 			`
             # Nat
@@ -222,7 +223,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	xit("Should declare a factorial func",
+	it("Should declare a factorial func",
 		test(
 			`
             # Nat
