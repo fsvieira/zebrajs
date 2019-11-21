@@ -3,7 +3,7 @@
 const test = require("../test-utils/test");
 
 describe("Test domain extraction.", () => {
-	xit("should be a easy domain",
+	it("should be a easy domain",
 		test(
             `
             (number 0)
