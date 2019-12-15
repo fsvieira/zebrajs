@@ -55,7 +55,7 @@ describe("Test domain extraction.", () => {
 					"@(@(number 3) @(number 2))",
 					"@(@(number 3) @(number 3))"
 				]
-			}, /*{
+			}, {
 				query: "?((number 'x) (number 'y) ^('x = 'y))",
 				results: [
 					"@(@(number 0) @(number 1))[^!(0 = 1) !(0 = 1)]",
@@ -71,7 +71,7 @@ describe("Test domain extraction.", () => {
 					"@(@(number 3) @(number 1))[^!(3 = 1) !(3 = 1)]",
 					"@(@(number 3) @(number 2))[^!(3 = 2) !(3 = 2)]"
 				]
-			}*/],
+			}],
 			{
 				timeout: 1000 * 60 * 5
 			}

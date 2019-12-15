@@ -42,7 +42,7 @@ describe("Func tests.", () => {
 		.
 	`);
 
-	xit("brother test.",
+	it("brother test.",
 		test(
 			`(male rolando)
             (female noémia)

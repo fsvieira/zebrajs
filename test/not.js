@@ -47,10 +47,7 @@ describe("Not Tests.", () => {
 			"(equal 'x 'x) ('x)", [{
 				query: "?(equal ('x) (yellow) ^(equal ('x) (blue)))",
 				results: [
-					/*
-					"@(equal @(yellow) @(yellow))" +
-					"[^!(equal (yellow) (blue))]"*/
-					"@(equal @(yellow) @(yellow))[^!(equal (yellow) (blue)) !(equal (yellow) (blue)) !(equal (yellow) (blue))]"
+					"@(equal @(yellow) @(yellow))[^!(equal (yellow) (blue)) !(equal (yellow) (blue))]"
 				]
 			}]
 		)
@@ -112,7 +109,7 @@ describe("Not Tests.", () => {
 					query: "?(distinct (color yellow) (color blue))",
 					results: [
 						"@(distinct @(color yellow) @(color blue))" + 
-						"[^!(equal (color yellow) (color blue)) !(equal (color yellow) (color blue))]"
+							"[^!(equal (color yellow) (color blue))]"
 					]
 				},
 				{
@@ -140,8 +137,8 @@ describe("Not Tests.", () => {
             `, [{
 				query: "?(not (number 'p) (number 'q))",
 				results: [
-					"@(not @(number 0) @(number 1))[^!(equal (number 0) (number 1)) !(equal (number 0) (number 1))]",
-					"@(not @(number 1) @(number 0))[^!(equal (number 1) (number 0)) !(equal (number 1) (number 0))]"
+					"@(not @(number 0) @(number 1))[^!(equal (number 0) (number 1))]",
+      				"@(not @(number 1) @(number 0))[^!(equal (number 1) (number 0))]"
 				]
 			}],
 			{timeout: 1000 * 60 * 5}
@@ -259,7 +256,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a number Set, 3 elements",
+	it("Should declare a number Set, 3 elements",
 		test(
 			`(number 0)
             (number 1)
@@ -307,7 +304,7 @@ describe("Not Tests.", () => {
 		)
 	);
 
-	xit("Should declare a number Set, 4 elements",
+	it("Should declare a number Set, 4 elements",
 		test(
 			`(number 0)
             (number 1)

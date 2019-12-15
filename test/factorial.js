@@ -118,7 +118,7 @@ describe("Factorial Parser Tests.", () => {
 		)
 	);
 
-	xit("Should declare a mul func",
+	it("Should declare a mul func",
 		test(
 			`
             # Nat
