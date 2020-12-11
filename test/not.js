@@ -59,35 +59,35 @@ describe("Not Tests.", () => {
 			 (equal 'x 'x)
 			 (not-equal 'x 'y ^(equal 'x 'y))
 			`, [{
-					query: "?(equal yellow yellow)",
-					results: [
-						"@(equal yellow yellow)"
-					]
-				},
-				{
-					query: "?(equal yellow blue)",
-					results: []
-				},
-				{
-					query: "?(not-equal yellow yellow)",
-					results: []
-				},
-				{
-					query: "?(not-equal yellow blue)",
-					results: [
-						"@(not-equal yellow blue)[^!(equal yellow blue)]"
-					]
-				},
-				{
-					query: "?(not-equal (color yellow) (color yellow))",
-					results: []
-				},
-				{
-					query: "?(not-equal (color blue) (color yellow))",
-					results: [
-						"@(not-equal @(color blue) @(color yellow))[^!(equal (color blue) (color yellow)) !(equal (color blue) (color yellow))]"
-					]
-				}
+				query: "?(equal yellow yellow)",
+				results: [
+					"@(equal yellow yellow)"
+				]
+			},
+			{
+				query: "?(equal yellow blue)",
+				results: []
+			},
+			{
+				query: "?(not-equal yellow yellow)",
+				results: []
+			},
+			{
+				query: "?(not-equal yellow blue)",
+				results: [
+					"@(not-equal yellow blue)[^!(equal yellow blue)]"
+				]
+			},
+			{
+				query: "?(not-equal (color yellow) (color yellow))",
+				results: []
+			},
+			{
+				query: "?(not-equal (color blue) (color yellow))",
+				results: [
+					"@(not-equal @(color blue) @(color yellow))[^!(equal (color blue) (color yellow)) !(equal (color blue) (color yellow))]"
+				]
+			}
 			]
 		)
 	);
@@ -99,7 +99,7 @@ describe("Not Tests.", () => {
             (color red)
             (equal 'x 'x)
             (distinct 'x 'y ^(equal 'x 'y))
-			`, 
+			`,
 			[
 				{
 					query: "?(distinct (color yellow) (color yellow))",
@@ -108,8 +108,8 @@ describe("Not Tests.", () => {
 				{
 					query: "?(distinct (color yellow) (color blue))",
 					results: [
-						"@(distinct @(color yellow) @(color blue))" + 
-							"[^!(equal (color yellow) (color blue))]"
+						"@(distinct @(color yellow) @(color blue))" +
+						"[^!(equal (color yellow) (color blue))]"
 					]
 				},
 				{
@@ -124,7 +124,7 @@ describe("Not Tests.", () => {
 					]
 				}
 			],
-			{timeout: 1000 * 60 * 5}
+			{ timeout: 1000 * 60 * 5 }
 		)
 	);
 
@@ -138,10 +138,10 @@ describe("Not Tests.", () => {
 				query: "?(not (number 'p) (number 'q))",
 				results: [
 					"@(not @(number 0) @(number 1))[^!(equal (number 0) (number 1))]",
-      				"@(not @(number 1) @(number 0))[^!(equal (number 1) (number 0))]"
+					"@(not @(number 1) @(number 0))[^!(equal (number 1) (number 0))]"
 				]
 			}],
-			{timeout: 1000 * 60 * 5}
+			{ timeout: 1000 * 60 * 5 }
 		)
 	);
 
@@ -157,38 +157,38 @@ describe("Not Tests.", () => {
             (fruit papaya)
 
             (equal 'x 'x)`, [{
-					query: "?(list)",
-					results: [
-						"@(list)"
-					]
-				},
-				{
-					query: "?(list (fruit banana) (list (fruit apple) (list)))",
-					results: [
-						"@(list @(fruit banana) @(list @(fruit apple) @(list)))"
-					]
-				},
-				{
-					query: "?(list (fruit 'a) (list (fruit 'b) (list)) " +
-						" ^(equal 'a 'b))",
-					results: [
-						// TODO: remove duplicated negations ??
-						"@(list @(fruit apple) @(list @(fruit banana) @(list)))[^!(equal apple banana) !(equal apple banana)]",
-						"@(list @(fruit apple) @(list @(fruit papaya) @(list)))[^!(equal apple papaya) !(equal apple papaya)]",
-						"@(list @(fruit apple) @(list @(fruit strawberry) @(list)))[^!(equal apple strawberry) !(equal apple strawberry)]",
-						"@(list @(fruit banana) @(list @(fruit apple) @(list)))[^!(equal banana apple) !(equal banana apple)]",
-						"@(list @(fruit banana) @(list @(fruit papaya) @(list)))[^!(equal banana papaya) !(equal banana papaya)]",
-						"@(list @(fruit banana) @(list @(fruit strawberry) @(list)))[^!(equal banana strawberry) !(equal banana strawberry)]",
-						"@(list @(fruit papaya) @(list @(fruit apple) @(list)))[^!(equal papaya apple) !(equal papaya apple)]",
-						"@(list @(fruit papaya) @(list @(fruit banana) @(list)))[^!(equal papaya banana) !(equal papaya banana)]",
-						"@(list @(fruit papaya) @(list @(fruit strawberry) @(list)))[^!(equal papaya strawberry) !(equal papaya strawberry)]",
-						"@(list @(fruit strawberry) @(list @(fruit apple) @(list)))[^!(equal strawberry apple) !(equal strawberry apple)]",
-						"@(list @(fruit strawberry) @(list @(fruit banana) @(list)))[^!(equal strawberry banana) !(equal strawberry banana)]",
-						"@(list @(fruit strawberry) @(list @(fruit papaya) @(list)))[^!(equal strawberry papaya) !(equal strawberry papaya)]"
-					]
-				}
+				query: "?(list)",
+				results: [
+					"@(list)"
+				]
+			},
+			{
+				query: "?(list (fruit banana) (list (fruit apple) (list)))",
+				results: [
+					"@(list @(fruit banana) @(list @(fruit apple) @(list)))"
+				]
+			},
+			{
+				query: "?(list (fruit 'a) (list (fruit 'b) (list)) " +
+					" ^(equal 'a 'b))",
+				results: [
+					// TODO: remove duplicated negations ??
+					"@(list @(fruit apple) @(list @(fruit banana) @(list)))[^!(equal apple banana) !(equal apple banana)]",
+					"@(list @(fruit apple) @(list @(fruit papaya) @(list)))[^!(equal apple papaya) !(equal apple papaya)]",
+					"@(list @(fruit apple) @(list @(fruit strawberry) @(list)))[^!(equal apple strawberry) !(equal apple strawberry)]",
+					"@(list @(fruit banana) @(list @(fruit apple) @(list)))[^!(equal banana apple) !(equal banana apple)]",
+					"@(list @(fruit banana) @(list @(fruit papaya) @(list)))[^!(equal banana papaya) !(equal banana papaya)]",
+					"@(list @(fruit banana) @(list @(fruit strawberry) @(list)))[^!(equal banana strawberry) !(equal banana strawberry)]",
+					"@(list @(fruit papaya) @(list @(fruit apple) @(list)))[^!(equal papaya apple) !(equal papaya apple)]",
+					"@(list @(fruit papaya) @(list @(fruit banana) @(list)))[^!(equal papaya banana) !(equal papaya banana)]",
+					"@(list @(fruit papaya) @(list @(fruit strawberry) @(list)))[^!(equal papaya strawberry) !(equal papaya strawberry)]",
+					"@(list @(fruit strawberry) @(list @(fruit apple) @(list)))[^!(equal strawberry apple) !(equal strawberry apple)]",
+					"@(list @(fruit strawberry) @(list @(fruit banana) @(list)))[^!(equal strawberry banana) !(equal strawberry banana)]",
+					"@(list @(fruit strawberry) @(list @(fruit papaya) @(list)))[^!(equal strawberry papaya) !(equal strawberry papaya)]"
+				]
+			}
 			],
-			{timeout: 1000 * 60 * 5}
+			{ timeout: 1000 * 60 * 5 }
 		)
 	);
 
@@ -204,30 +204,30 @@ describe("Not Tests.", () => {
 
             (equal 'x 'x)
 			`, [{
-					query: `
+				query: `
     			        ?(set
         				    (number 'a)
         				    (set (number 'b) (set) ')
         				')
 					`,
-					postProcessing: setStart,
-					results: [
-						"[0, 1]",
-						"[1, 0]"
-					]
+				postProcessing: setStart,
+				results: [
+					"[0, 1]",
+					"[1, 0]"
+				]
 			},
-				{
-					query: `
+			{
+				query: `
     					?(set (number 'a)
     						(set (number 'b)
     						(set (number 'c) (set) ') ')
     					')
 					`,
-					postProcessing: setStart,
-					results: []
-				}
+				postProcessing: setStart,
+				results: []
+			}
 			],
-			{timeout: 1000 * 60 * 5}
+			{ timeout: 1000 * 60 * 5 }
 		)
 	);
 
@@ -247,12 +247,12 @@ describe("Not Tests.", () => {
 				postProcessing: setStart,
 				results: [
 					"[0, 1]",
-      				"[0]",
-       				"[1, 0]",
-      				"[1]"
+					"[0]",
+					"[1, 0]",
+					"[1]"
 				]
 			}],
-			{timeout: 1000 * 60 * 5}
+			{ timeout: 1000 * 60 * 5 }
 		)
 	);
 
@@ -269,34 +269,34 @@ describe("Not Tests.", () => {
 
             (equal 'x 'x)
             `, [{
-					query: `?(set (number 0)
+				query: `?(set (number 0)
 	                    (set (number 1)
 	                    (set (number 2) (set) ') ')
 					')`,
-					postProcessing: setStart,
-					results: ["[0, 1, 2]"]
-				},
-				{
-					query: "?(set (number 'a) 'tail ')",
-					postProcessing: setStart,
-					results: [
-						"[0, 1, 2]",
-						"[0, 1]",
-						"[0, 2, 1]",
-						"[0, 2]",
-						"[0]",
-						"[1, 0, 2]",
-						"[1, 0]",
-						"[1, 2, 0]",
-						"[1, 2]",
-						"[1]",
-						"[2, 0, 1]",
-						"[2, 0]",
-						"[2, 1, 0]",
-						"[2, 1]",
-						"[2]"
-					]
-				}
+				postProcessing: setStart,
+				results: ["[0, 1, 2]"]
+			},
+			{
+				query: "?(set (number 'a) 'tail ')",
+				postProcessing: setStart,
+				results: [
+					"[0, 1, 2]",
+					"[0, 1]",
+					"[0, 2, 1]",
+					"[0, 2]",
+					"[0]",
+					"[1, 0, 2]",
+					"[1, 0]",
+					"[1, 2, 0]",
+					"[1, 2]",
+					"[1]",
+					"[2, 0, 1]",
+					"[2, 0]",
+					"[2, 1, 0]",
+					"[2, 1]",
+					"[2]"
+				]
+			}
 			],
 			{
 				timeout: 1000 * 60 * 5
@@ -320,49 +320,49 @@ describe("Not Tests.", () => {
 
             (equal 'x 'x)
 			`, [{
-					query: `?(set (number 0)
+				query: `?(set (number 0)
 		                (set (number 1)
 		                (set (number 2)
 		                (set (number 3) (set) ') ') ')
 					')`,
-					postProcessing: setStart,
-					results: ["[0, 1, 2, 3]"]
-				},
-				{
-					query: `?(set (number 'a)
+				postProcessing: setStart,
+				results: ["[0, 1, 2, 3]"]
+			},
+			{
+				query: `?(set (number 'a)
 		                (set (number 'b)
 		                (set (number 'c)
 		                (set (number 'd) (set) ') ') ')
 					')`,
-					postProcessing: setStart,
-					results: [
-						"[0, 1, 2, 3]",
-						"[0, 1, 3, 2]",
-						"[0, 2, 1, 3]",
-						"[0, 2, 3, 1]",
-						"[0, 3, 1, 2]",
-						"[0, 3, 2, 1]",
-						"[1, 0, 2, 3]",
-						"[1, 0, 3, 2]",
-						"[1, 2, 0, 3]",
-						"[1, 2, 3, 0]",
-						"[1, 3, 0, 2]",
-						"[1, 3, 2, 0]",
-						"[2, 0, 1, 3]",
-						"[2, 0, 3, 1]",
-						"[2, 1, 0, 3]",
-						"[2, 1, 3, 0]",
-						"[2, 3, 0, 1]",
-						"[2, 3, 1, 0]",
-						"[3, 0, 1, 2]",
-						"[3, 0, 2, 1]",
-						"[3, 1, 0, 2]",
-						"[3, 1, 2, 0]",
-						"[3, 2, 0, 1]",
-						"[3, 2, 1, 0]"
-					]
-				}
-			], { 
+				postProcessing: setStart,
+				results: [
+					"[0, 1, 2, 3]",
+					"[0, 1, 3, 2]",
+					"[0, 2, 1, 3]",
+					"[0, 2, 3, 1]",
+					"[0, 3, 1, 2]",
+					"[0, 3, 2, 1]",
+					"[1, 0, 2, 3]",
+					"[1, 0, 3, 2]",
+					"[1, 2, 0, 3]",
+					"[1, 2, 3, 0]",
+					"[1, 3, 0, 2]",
+					"[1, 3, 2, 0]",
+					"[2, 0, 1, 3]",
+					"[2, 0, 3, 1]",
+					"[2, 1, 0, 3]",
+					"[2, 1, 3, 0]",
+					"[2, 3, 0, 1]",
+					"[2, 3, 1, 0]",
+					"[3, 0, 1, 2]",
+					"[3, 0, 2, 1]",
+					"[3, 1, 0, 2]",
+					"[3, 1, 2, 0]",
+					"[3, 2, 0, 1]",
+					"[3, 2, 1, 0]"
+				]
+			}
+			], {
 				timeout: 60000 * 20
 			}
 		)

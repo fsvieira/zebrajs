@@ -115,9 +115,12 @@
     "validateQuoteMarks": "\""
   },
   "dependencies": {
+    "@perfmetrics/lib": "^1.0.4",
     "fsalib": "^2.2.1",
     "identicobjects": "^1.0.4",
+    "install": "^0.13.0",
     "mkdirp": "^0.5.1",
+    "npm": "^6.14.9",
     "ztl": "^1.0.0"
   }
 }
